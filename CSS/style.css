@@ -209,3 +209,8 @@ header{
 .transacoes{
     grid-column: span 6;
 }
+.content{
+    margin-left: 260px;
+    min-height: 100vh;
+    padding: 30px;
+}
