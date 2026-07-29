@@ -1,0 +1,211 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+:root{
+    --background: #0B0F14;
+    --sidebar: #111720;
+    --card: #161E2D;
+    --border: #273348;
+
+    --primary: #16C784;
+
+    --text: #FFFFFF;
+    --text-secondary: #8A99B8;
+}
+
+/*BODY*/
+
+body{
+    background: var(--background);
+    color: var(--text);
+}
+
+/*SIDEBAR*/
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    padding: 25px 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+}
+
+/*LOGO*/
+
+.logo{
+    margin-bottom: 40px;
+}
+
+.logo h2{
+    font-size: 30px;
+}
+
+/*MENU*/
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu a{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    height: 52px;
+
+    padding: 0 18px;
+
+    border-radius: 12px;
+
+    color: var(--text-secondary);
+    text-decoration: none;
+
+    transition: .25s;
+}
+
+.menu i{
+    width: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.menu span{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.menu a:hover{
+    background: #1B2536;
+    color: white;
+}
+
+.menu a.active{
+    background: var(--primary);
+    color: white;
+}
+
+/*FOOTER SIDEBAR*/
+
+.bottom{
+    margin-top: auto;
+}
+
+.bottom a{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    height: 52px;
+
+    padding: 0 18px;
+
+    border-radius: 12px;
+
+    color: var(--text-secondary);
+    text-decoration: none;
+
+    transition: .25s;
+}
+
+.bottom a:hover{
+    background: #1B2536;
+    color: white;
+}
+
+/*MAIN*/
+
+main{
+    margin-left: 260px;
+    padding: 30px;
+}
+
+/*HEADER*/
+
+header{
+    margin-bottom: 25px;
+}
+
+/*GRID DASHBOARD*/
+
+.dashboard{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+}
+
+/*CARDS*/
+
+.card{
+    padding: 24px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.card p{
+    margin-bottom: 10px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: white;
+}
+
+/*GRID*/
+
+.saldo{
+    grid-column: span 3;
+}
+
+.receitas{
+    grid-column: span 3;
+}
+
+.despesas{
+    grid-column: span 3;
+}
+
+.meta{
+    grid-column: span 3;
+}
+
+.grafico-linha{
+    grid-column: span 8;
+    min-height: 350px;
+}
+
+.grafico-pizza{
+    grid-column: span 4;
+}
+
+.grafico-barra{
+    grid-column: span 12;
+    min-height: 250px;
+}
+
+.categorias{
+    grid-column: span 6;
+}
+
+.transacoes{
+    grid-column: span 6;
+}
