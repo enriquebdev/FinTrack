@@ -25,6 +25,7 @@
             <a href="#">
                 <i data-lucide="wallet"></i>
                 <span>Transações</span>
+            
             </a>
 
             <a href="#">
@@ -75,6 +76,13 @@
 
         <main class="dashboard">
 
+            <section class="card transacoes">
+                <h3>Últimas Transações</h3>
+                <div id="lista-transacoes">
+
+                </div>
+            </section>
+
             <section class="card saldo">
                 <h3>Saldo</h3>
                 <p id="saldo">R$ 0,00</p>
@@ -82,12 +90,12 @@
 
             <section class="card receitas">
                 <h3>Receitas</h3>
-                <p>R$ 0,00</p>
+                <p id="receitas">R$ 0</p>
             </section>
 
             <section class="card despesas">
                 <h3>Despesas</h3>
-                <p>R$ 0,00</p>
+                <p id="despesas">R$ 0</p>
             </section>
 
             <section class="card meta">
@@ -106,6 +114,31 @@
             <section class="card transacoes"></section>
 
         </main>
+
+    <section class="card formulario">
+        <h3>Nova Transação</h3>
+        <input
+            type="text"
+            id="descricao"
+            placeholder="Descrição">
+        <input
+            type="number"
+            id="valor"
+            placeholder="Valor">
+
+        <select id="tipo">
+
+            <option value="Receita">Receita</option>
+
+            <option value="Despesa">Despesa</option>
+
+        </select>
+
+        <button id="adicionar">
+            Adicionar
+        </button>
+
+    </section>
 
     </div>
     <script src="JS/script.js"></script>

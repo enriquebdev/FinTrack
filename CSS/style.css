@@ -214,3 +214,10 @@ header{
     min-height: 100vh;
     padding: 30px;
 }
+.transacao{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #273348;
+}
