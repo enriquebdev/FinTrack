@@ -1,0 +1,289 @@
+/*==================================================
+=                 BARRA DE PESQUISA                =
+==================================================*/
+
+.search{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    width:360px;
+    height:48px;
+
+    padding:0 16px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    transition:.25s;
+
+}
+
+.search:focus-within{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 4px rgba(22,199,132,.12);
+
+}
+
+.search input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:none;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+.search input::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+
+/*==================================================
+=                 BOTÕES DO HEADER                 =
+==================================================*/
+
+.icon-btn{
+
+    width:46px;
+    height:46px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    background:var(--card);
+
+    color:var(--text-secondary);
+
+    transition:.25s;
+
+}
+
+.icon-btn:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+/*==================================================
+=                     AVATAR                       =
+==================================================*/
+
+.avatar{
+
+    width:46px;
+    height:46px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+/*==================================================
+=                  GRID DASHBOARD                  =
+==================================================*/
+
+.dashboard{
+
+    display:grid;
+
+    grid-template-columns:repeat(12,1fr);
+
+    gap:22px;
+
+}
+
+
+/*==================================================
+=                     CARDS                        =
+==================================================*/
+
+.card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    padding:24px;
+
+    box-shadow:var(--shadow);
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:var(--primary);
+
+}
+
+
+/*==================================================
+=            TÍTULOS DOS CARDS                     =
+==================================================*/
+
+.card small{
+
+    display:block;
+
+    color:var(--text-secondary);
+
+    font-size:14px;
+
+    margin-bottom:12px;
+
+}
+
+.card p{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    letter-spacing:-1px;
+
+}
+
+
+/*==================================================
+=            ÍCONE DO CARD                         =
+==================================================*/
+
+.card-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.card-icon{
+
+    width:46px;
+
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:rgba(22,199,132,.12);
+
+    color:var(--primary);
+
+}
+
+
+/*==================================================
+=                 POSIÇÃO GRID                     =
+==================================================*/
+
+.saldo{
+
+    grid-column:span 3;
+
+}
+
+.receitas{
+
+    grid-column:span 3;
+
+}
+
+.despesas{
+
+    grid-column:span 3;
+
+}
+
+.meta{
+
+    grid-column:span 3;
+
+}
+
+.grafico-linha{
+
+    grid-column:span 8;
+
+    min-height:350px;
+
+}
+
+.grafico-pizza{
+
+    grid-column:span 4;
+
+    min-height:350px;
+
+}
+
+.grafico-barra{
+
+    grid-column:span 12;
+
+    min-height:250px;
+
+}
+
+.categorias{
+
+    grid-column:span 6;
+
+}
+
+.transacoes{
+
+    grid-column:span 6;
+
+}

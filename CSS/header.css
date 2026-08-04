@@ -1,0 +1,246 @@
+/*==================================================
+=                 RESET E VARIÁVEIS                =
+==================================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --background:#0B0F14;
+    --sidebar:#111720;
+    --card:#161E2D;
+
+    --border:#273348;
+
+    --primary:#16C784;
+    --primary-hover:#13B473;
+
+    --danger:#FF5A5A;
+
+    --text:#FFFFFF;
+    --text-secondary:#8A99B8;
+
+    --shadow:0 10px 30px rgba(0,0,0,.25);
+
+}
+
+body{
+
+    background:var(--background);
+    color:var(--text);
+
+    font-family:"Inter",sans-serif;
+
+}
+
+
+/*==================================================
+=                   SIDEBAR                        =
+==================================================*/
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:260px;
+    height:100vh;
+
+    padding:24px 18px;
+
+    background:var(--sidebar);
+
+    border-right:1px solid var(--border);
+
+    display:flex;
+    flex-direction:column;
+
+    box-shadow:6px 0 25px rgba(0,0,0,.25);
+
+}
+
+
+/*==================================================
+=                    LOGO                          =
+==================================================*/
+
+.logo{
+
+    margin-bottom:45px;
+
+}
+
+.logo h1{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    letter-spacing:-1px;
+
+}
+
+
+/*==================================================
+=                     MENU                         =
+==================================================*/
+
+.menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    width:100%;
+
+    height:52px;
+
+    padding:0 18px;
+
+    text-decoration:none;
+
+    border-radius:14px;
+
+    color:var(--text-secondary);
+
+    transition:.25s;
+
+}
+
+.menu a:hover{
+
+    background:#1C2535;
+
+    color:white;
+
+}
+
+.menu a.active{
+
+    background:var(--primary);
+
+    color:white;
+
+    box-shadow:0 8px 20px rgba(22,199,132,.25);
+
+}
+
+.menu i{
+
+    width:20px;
+
+}
+
+
+/*==================================================
+=              BOTÃO SAIR                          =
+==================================================*/
+
+.bottom{
+
+    margin-top:auto;
+
+}
+
+.bottom a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    height:52px;
+
+    padding:0 18px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    color:var(--text-secondary);
+
+    transition:.25s;
+
+}
+
+.bottom a:hover{
+
+    background:#1C2535;
+
+    color:white;
+
+}
+
+
+/*==================================================
+=                  CONTEÚDO                        =
+==================================================*/
+
+.content{
+
+    margin-left:260px;
+
+    min-height:100vh;
+
+    padding:30px;
+
+}
+
+
+/*==================================================
+=                    HEADER                        =
+==================================================*/
+
+header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+header h2{
+
+    font-size:30px;
+
+    font-weight:700;
+
+}
+
+
+/*==================================================
+=               LADO DIREITO HEADER                =
+==================================================*/
+
+.header-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}

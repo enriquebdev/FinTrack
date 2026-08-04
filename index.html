@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>FinTrack</title>
-    <link rel="stylesheet" href="CSS/style.css">
-</head>
+
+    <link rel="stylesheet" href="CSS/modal.css">
+    <link rel="stylesheet" href="CSS/pesquisa.css">
+    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="CSS/animacoes.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
 <body>
+
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
@@ -25,16 +41,15 @@
             <a href="#">
                 <i data-lucide="wallet"></i>
                 <span>Transações</span>
-            
             </a>
 
             <a href="#">
-                <i data-lucide="tags"></i>
+                <i data-lucide="tag"></i>
                 <span>Categorias</span>
             </a>
 
             <a href="#">
-                <i data-lucide="chart-column"></i>
+                <i data-lucide="pie-chart"></i>
                 <span>Relatórios</span>
             </a>
 
@@ -61,92 +76,259 @@
 
     </aside>
 
+    <!-- CONTEÚDO -->
+
     <div class="content">
+
+        <!-- HEADER -->
 
         <header>
 
-            <section class="pesquisa">
-                Buscar
-            </section>
+            <h2>Dashboard</h2>
 
-            <section id="icones">
-            </section>
+            <div class="header-right">
+
+                <div class="search">
+
+                    <i data-lucide="search"></i>
+
+                    <input
+                        type="text"
+                        placeholder="Buscar transações..."
+                    >
+
+                </div>
+
+                <button class="icon-btn">
+                    <i data-lucide="bell"></i>
+                </button>
+
+                <button class="icon-btn">
+                    <i data-lucide="moon"></i>
+                </button>
+
+                <div class="avatar">
+                    EB
+                </div>
+
+            </div>
 
         </header>
 
+        <!-- DASHBOARD -->
+
         <main class="dashboard">
 
-            <section class="card transacoes">
-                <h3>Últimas Transações</h3>
-                <div id="lista-transacoes">
+            <!-- SALDO -->
 
+            <section class="card saldo">
+
+                <div class="card-top">
+
+                    <small>Saldo Total</small>
+
+                    <div class="card-icon">
+                        <i data-lucide="wallet"></i>
+                    </div>
+
+                </div>
+
+                <p id="saldo">R$ 0,00</p>
+
+            </section>
+
+            <!-- RECEITAS -->
+
+            <section class="card receitas">
+
+                <div class="card-top">
+
+                    <small>Receitas</small>
+
+                    <div class="card-icon">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+
+                </div>
+
+                <p id="receitas">R$ 0,00</p>
+
+            </section>
+
+            <!-- DESPESAS -->
+
+            <section class="card despesas">
+
+                <div class="card-top">
+
+                    <small>Despesas</small>
+
+                    <div class="card-icon">
+                        <i data-lucide="trending-down"></i>
+                    </div>
+
+                </div>
+
+                <p id="despesas">R$ 0,00</p>
+
+            </section>
+
+            <!-- META -->
+
+            <section class="card meta">
+
+                <div class="card-top">
+
+                    <small>Meta</small>
+
+                    <div class="card-icon">
+                        <i data-lucide="target"></i>
+                    </div>
+
+                </div>
+
+                <p id="meta">R$ 0,00</p>
+
+            </section>
+
+            <!-- GRÁFICO LINHA -->
+
+            <section class="card grafico-linha">
+
+                <div class="card-header">
+                    <h3>Fluxo Financeiro</h3>
+                </div>
+
+                <canvas id="graficoLinha"></canvas>
+
+            </section>
+
+            <!-- GRÁFICO PIZZA -->
+
+            <section class="card grafico-pizza">
+
+                <div class="card-header">
+                    <h3>Categorias</h3>
+                </div>
+
+                <canvas id="graficoPizza"></canvas>
+
+            </section>
+
+            <!-- GRÁFICO BARRA -->
+
+            <section class="card grafico-barra">
+
+                <div class="card-header">
+                    <h3>Receitas x Despesas</h3>
+                </div>
+
+                <canvas id="graficoBarra"></canvas>
+
+            </section>
+
+            <!-- CATEGORIAS -->
+
+            <section class="card categorias">
+                <div class="card-header">
+
+                    <h3>Categorias</h3>
+
+                </div>
+                <div id="lista-categorias">
+                    <p>Nenhuma categoria cadastrada.</p>
                 </div>
             </section>
 
-            <section class="card saldo">
-                <h3>Saldo</h3>
-                <p id="saldo">R$ 0,00</p>
-            </section>
+            <!-- TRANSAÇÕES -->
 
-            <section class="card receitas">
-                <h3>Receitas</h3>
-                <p id="receitas">R$ 0</p>
-            </section>
+                    <section class="card transacoes">
 
-            <section class="card despesas">
-                <h3>Despesas</h3>
-                <p id="despesas">R$ 0</p>
-            </section>
+                        <div class="card-header">
 
-            <section class="card meta">
-                <h3>Meta</h3>
-                <p>R$ 0,00</p>
-            </section>
+                            <h3>Últimas Transações</h3>
 
-            <section class="card grafico-linha"></section>
+                            <button id="adicionar" class="btn-add">
+                                Nova
+                            </button>
 
-            <section class="card grafico-pizza"></section>
+                        </div>
 
-            <section class="card grafico-barra"></section>
+                        <div id="lista-transacoes"></div>
 
-            <section class="card categorias"></section>
+                    </section>
 
-            <section class="card transacoes"></section>
+                </main>
 
-        </main>
+            </div>
 
-    <section class="card formulario">
-        <h3>Nova Transação</h3>
-        <input
-            type="text"
-            id="descricao"
-            placeholder="Descrição">
-        <input
-            type="number"
-            id="valor"
-            placeholder="Valor">
 
-        <select id="tipo">
+            <div class="modal" id="modal">
 
-            <option value="Receita">Receita</option>
+    <div class="modal-content">
 
-            <option value="Despesa">Despesa</option>
+        <div class="modal-header">
 
-        </select>
+            <h2>Nova Transação</h2>
 
-        <button id="adicionar">
-            Adicionar
+            <button id="fechar-modal">&times;</button>
+
+        </div>
+
+        <div class="campo">
+
+            <label>Descrição</label>
+
+            <input
+                type="text"
+                id="descricao"
+                placeholder="Ex.: Mercado"
+            >
+
+        </div>
+
+        <div class="campo">
+
+            <label>Valor</label>
+
+            <input
+                type="number"
+                id="valor"
+                placeholder="0,00"
+            >
+
+        </div>
+
+        <div class="campo">
+
+            <label>Tipo</label>
+
+            <select id="tipo">
+
+                <option>Receita</option>
+
+                <option>Despesa</option>
+
+            </select>
+
+        </div>
+
+        <button id="salvar" class="btn-add">
+
+            Salvar
+
         </button>
 
-    </section>
-
     </div>
-    <script src="JS/script.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script>
-        lucide.createIcons();
-    </script>
+</div>
+
+            <script src="JS/script.js"></script>
+
+            <script>
+                lucide.createIcons();
+            </script>
+
 
 </body>
 </html>
