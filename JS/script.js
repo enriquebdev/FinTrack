@@ -1,6 +1,8 @@
 const saldoTela = document.querySelector("#saldo");
 const receitasTela = document.querySelector("#receitas");
 const despesasTela = document.querySelector("#despesas");
+const categoria = document.querySelector("#categoria").value;
+const data = document.querySelector("#data").value;
 
 const lista = document.querySelector("#lista-transacoes");
 
@@ -14,6 +16,12 @@ const pesquisa = document.querySelector("#pesquisa");
 let indiceEdicao = null;
 
 let transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+
+const graficoLinha = document.querySelector("#graficoLinha");
+
+const graficoPizza = document.querySelector("#graficoPizza");
+
+const graficoBarra = document.querySelector("#graficoBarra");
 
 function salvarTransacoes() {
 
@@ -185,15 +193,13 @@ botaoSalvar.addEventListener("click", function () {
 
     const novaTransacao = {
 
+    descricao,
+    tipo,
+    valor,
+    categoria,
+    data
 
-        descricao: descricao,
-
-        tipo: tipo,
-
-        valor: valor
-
-
-    };
+}
 
 
     if (indiceEdicao === null) {
@@ -240,6 +246,17 @@ botaoSalvar.addEventListener("click", function () {
         console.log(resultado);
 
     });
+
+
+    let chartLinha;
+
+    let chartPizza;
+
+    let chartBarra;
+
+
+
+
 
 atualizarCards();
 
