@@ -9,29 +9,20 @@ const abrirModal = document.querySelector("#adicionar");
 const fecharModal = document.querySelector("#fechar-modal");
 const botaoSalvar = document.querySelector("#salvar");
 
+const pesquisa = document.querySelector("#pesquisa");
 
-const transacoes = [
-    {
-        descricao: "Salário",
-        tipo: "Receita",
-        valor: 3500
-    },
-    {
-        descricao: "Mercado",
-        tipo: "Despesa",
-        valor: 450
-    },
-    {
-        descricao: "Internet",
-        tipo: "Despesa",
-        valor: 100
-    },
-    {
-        descricao: "Freelance",
-        tipo: "Receita",
-        valor: 800
-    }
-];
+let indiceEdicao = null;
+
+let transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+
+function salvarTransacoes() {
+
+    localStorage.setItem(
+        "transacoes",
+        JSON.stringify(transacoes)
+    );
+
+}
 
 function atualizarCards() {
 
@@ -61,40 +52,45 @@ function atualizarCards() {
 
 }
 
-function mostrarTransacoes() {
+function mostrarTransacoes(listaTransacoes = transacoes) {
 
     lista.innerHTML = "";
 
-    transacoes.forEach((transacao, index) => {
+    listaTransacoes.forEach(transacao => {
+
+        const indexOriginal = transacoes.indexOf(transacao);
 
         const html = `
-        <div class="transacao">
+            <div class="transacao">
 
-            <div>
+                <div>
 
-                <h4>${transacao.descricao}</h4>
+                    <h4>${transacao.descricao}</h4>
 
-                <p>${transacao.tipo}</p>
+                    <p>${transacao.tipo}</p>
+
+                </div>
+
+                <div style="display:flex;align-items:center;gap:15px;">
+
+                    <span class="valor ${transacao.tipo === "Receita" ? "receita" : "despesa"}">
+
+                        ${transacao.tipo === "Receita" ? "+" : "-"} 
+                        R$ ${transacao.valor.toFixed(2)}
+
+                    </span>
+
+                    <button class="btn-edit" onclick="editarTransacao(${indexOriginal})">
+                        <i data-lucide="pencil"></i>
+                    </button>
+
+                    <button class="btn-delete" onclick="removerTransacao(${indexOriginal})">
+                        <i data-lucide="trash-2"></i>
+                    </button>
+
+                </div>
 
             </div>
-
-            <div style="display:flex;align-items:center;gap:15px;">
-
-                <span class="valor ${transacao.tipo === "Receita" ? "receita" : "despesa"}">
-
-                    ${transacao.tipo === "Receita" ? "+" : "-"} R$ ${transacao.valor.toFixed(2)}
-
-                </span>
-
-                <button class="btn-delete" onclick="removerTransacao(${index})">
-
-                    <i data-lucide="trash-2"></i>
-
-                </button>
-
-            </div>
-
-        </div>
         `;
 
         lista.innerHTML += html;
@@ -105,17 +101,40 @@ function mostrarTransacoes() {
 
 }
 
+
 function removerTransacao(index) {
+
 
     transacoes.splice(index, 1);
 
-    atualizarCards();
 
+    salvarTransacoes();
+
+
+    atualizarCards();
     mostrarTransacoes();
+
+
+}
+
+function editarTransacao(index) {
+
+    indiceEdicao = index;
+
+    const transacao = transacoes[index];
+
+    document.querySelector("#descricao").value = transacao.descricao;
+
+    document.querySelector("#valor").value = transacao.valor;
+
+    document.querySelector("#tipo").value = transacao.tipo;
+
+    modal.classList.add("active");
 
 }
 
 abrirModal.addEventListener("click", function () {
+
 
     modal.classList.add("active");
 
@@ -125,9 +144,12 @@ fecharModal.addEventListener("click", function () {
 
     modal.classList.remove("active");
 
+
 });
 
+
 botaoSalvar.addEventListener("click", function () {
+
 
     const descricao = document.querySelector("#descricao").value;
 
@@ -135,23 +157,34 @@ botaoSalvar.addEventListener("click", function () {
 
     const tipo = document.querySelector("#tipo").value;
 
+
+
     if (descricao.trim() === "") {
+
 
         alert("Digite uma descrição.");
 
         return;
 
+
     }
 
-    if (valor <= 0) {
+
+
+    if (valor <= 0 || isNaN(valor)) {
+
 
         alert("Digite um valor maior que zero.");
 
         return;
 
+
     }
 
+
+
     const novaTransacao = {
+
 
         descricao: descricao,
 
@@ -159,17 +192,29 @@ botaoSalvar.addEventListener("click", function () {
 
         valor: valor
 
+
     };
 
-    transacoes.push(novaTransacao);
+
+    if (indiceEdicao === null) {
+
+        transacoes.push(novaTransacao);
+
+    } else {
+
+        transacoes[indiceEdicao] = novaTransacao;
+
+        indiceEdicao = null;
+
+    }
+
+    salvarTransacoes();
 
     atualizarCards();
 
     mostrarTransacoes();
 
-
     modal.classList.remove("active");
-
 
     document.querySelector("#descricao").value = "";
 
@@ -179,13 +224,22 @@ botaoSalvar.addEventListener("click", function () {
 
 });
 
-abrirModal.addEventListener("click", function () {
+    pesquisa.addEventListener("input", function(){
 
-    console.log("clicou");
+        const texto = pesquisa.value.toLowerCase();
 
-    modal.classList.add("active");
+        const resultado = transacoes.filter(function(transacao){
 
-});
+            return transacao.descricao
+                .toLowerCase()
+                .includes(texto);
+
+        });
+
+        mostrarTransacoes(resultado);
+        console.log(resultado);
+
+    });
 
 atualizarCards();
 
