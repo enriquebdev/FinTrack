@@ -36,8 +36,6 @@ Estruturação de aplicações JavaScript
 Ao longo do desenvolvimento, novas funcionalidades e melhorias serão adicionadas conforme minha evolução nos estudos.
 
 📈 Próximas implementações
-Pesquisa de transações
-Filtro por categoria e período
 Exportação de dados
 Login de usuário
 Integração com API
