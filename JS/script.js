@@ -142,6 +142,8 @@ function editarTransacao(index) {
 
     document.querySelector("#data").value = transacao.data;
 
+    indiceEdicao = index;
+
     modal.classList.add("active");
 
 }
@@ -170,6 +172,9 @@ botaoSalvar.addEventListener("click", function () {
 
     const tipo = document.querySelector("#tipo").value;
 
+    const categoria = document.querySelector("#categoria").value;
+    
+    const data = document.querySelector("#data").value;
 
 
     if (descricao.trim() === "") {
