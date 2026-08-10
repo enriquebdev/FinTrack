@@ -4,7 +4,7 @@ O FinTrack Dashboard é uma aplicação web desenvolvida para auxiliar no contro
 
 O projeto foi criado com o objetivo de praticar conceitos fundamentais de desenvolvimento Front-end, aplicando HTML, CSS e JavaScript em um sistema completo de gerenciamento financeiro.
 
-✨ Funcionalidades
+Funcionalidades
 Dashboard com resumo financeiro
 Cadastro de receitas e despesas
 Cálculo automático do saldo
@@ -14,16 +14,16 @@ Gráficos para visualização dos dados
 Armazenamento local utilizando LocalStorage
 Interface responsiva para desktop, tablet e smartphone
 Tema claro e escuro (Dark Mode)
-🚀 Tecnologias utilizadas
+
+Tecnologias utilizadas:
 HTML5
 CSS3
 JavaScript (ES6+)
 Chart.js
 LocalStorage
 Git e GitHub
-📚 Objetivo do projeto
 
-Este projeto faz parte da minha evolução como desenvolvedor Front-end e foi desenvolvido para colocar em prática conceitos como:
+Durante o projeto estão sendo aplicados os seguintes fundamentos:
 
 Manipulação do DOM
 Eventos
@@ -33,9 +33,8 @@ Persistência de dados
 Responsividade
 Estruturação de aplicações JavaScript
 
-Ao longo do desenvolvimento, novas funcionalidades e melhorias serão adicionadas conforme minha evolução nos estudos.
+Futuras implementações:
 
-📈 Próximas implementações
 Exportação de dados
 Login de usuário
 Integração com API
