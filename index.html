@@ -266,83 +266,101 @@
 
             <div class="modal" id="modal">
 
-    <div class="modal-content">
+                <div class="modal-content">
 
-        <div class="modal-header">
+                    <div class="modal-header">
 
-            <h2>Nova Transação</h2>
+                        <h2>Nova Transação</h2>
 
-            <button id="fechar-modal">&times;</button>
+                        <button id="fechar-modal">&times;</button>
 
-        </div>
+                    </div>
 
-        <div class="campo">
+                    <div class="campo">
 
-            <label>Descrição</label>
+                        <label>Descrição</label>
 
-            <input
-                type="text"
-                id="descricao"
-                placeholder="Ex.: Mercado"
-            >
+                        <input
+                            type="text"
+                            id="descricao"
+                            placeholder="Ex.: Mercado"
+                        >
 
-        </div>
+                    </div>
 
-        <div class="campo">
+                    <div class="campo">
 
-            <label>Valor</label>
+                        <label>Valor</label>
 
-            <input
-                type="number"
-                id="valor"
-                placeholder="0,00"
-            >
+                        <input
+                            type="number"
+                            id="valor"
+                            placeholder="0,00"
+                            step="0.01"
+                        >
 
-        </div>
+                    </div>
 
-        <div class="campo">
+                    <div class="campo">
 
-            <label>Tipo</label>
+                        <label>Tipo</label>
 
-            <select id="tipo">
+                        <select id="tipo">
 
-                <option>Receita</option>
+                            <option value="Receita">Receita</option>
 
-                <option>Despesa</option>
+                            <option value="Despesa">Despesa</option>
 
-            </select>
+                        </select>
 
-        </div>
+                    </div>
 
-        <button id="salvar" class="btn-add">
+                    <div class="campo">
 
-            Salvar
+                        <label>Categoria</label>
 
-        </button>
+                        <select id="categoria">
 
-    </div>
+                            <option value="Alimentação">Alimentação</option>
 
-</div>
+                            <option value="Transporte">Transporte</option>
 
-            <label>Categoria</label>
+                            <option value="Moradia">Moradia</option>
 
-                <select id="categoria">
+                            <option value="Saúde">Saúde</option>
 
-                    <option>Alimentação</option>
-                    <option>Transporte</option>
-                    <option>Lazer</option>
-                    <option>Moradia</option>
-                    <option>Saúde</option>
-                    <option>Estudos</option>
-                    <option>Salário</option>
-                    <option>Freelance</option>
-                    <option>Outros</option>
+                            <option value="Estudos">Estudos</option>
 
-                </select>
+                            <option value="Lazer">Lazer</option>
 
-                <label>Data</label>
+                            <option value="Salário">Salário</option>
 
-                    <input type="date" id="data">
+                            <option value="Freelance">Freelance</option>
+
+                            <option value="Outros">Outros</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label>Data</label>
+
+                        <input
+                            type="date"
+                            id="data"
+                        >
+
+                    </div>
+
+                    <button id="salvar" class="btn-add">
+
+                        Salvar
+
+                    </button>
+
+                </div>
 
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>   

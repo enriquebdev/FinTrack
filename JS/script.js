@@ -23,6 +23,7 @@ const graficoPizza = document.querySelector("#graficoPizza");
 
 const graficoBarra = document.querySelector("#graficoBarra");
 
+
 function salvarTransacoes() {
 
     localStorage.setItem(
@@ -137,6 +138,10 @@ function editarTransacao(index) {
 
     document.querySelector("#tipo").value = transacao.tipo;
 
+    document.querySelector("#categoria").value = transacao.categoria;
+
+    document.querySelector("#data").value = transacao.data;
+
     modal.classList.add("active");
 
 }
@@ -227,6 +232,10 @@ botaoSalvar.addEventListener("click", function () {
     document.querySelector("#valor").value = "";
 
     document.querySelector("#tipo").value = "Receita";
+
+    document.querySelector("#categoria").value = "Alimentação";
+    
+    document.querySelector("#data").value = "";
 
 });
 

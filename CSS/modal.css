@@ -134,3 +134,39 @@
     margin-top:10px;
 
 }
+#modal select,
+#modal input[type="date"] {
+    width: 100%;
+    padding: 12px 14px;
+
+    background: #111720;
+    color: #ffffff;
+
+    border: 1px solid #273348;
+    border-radius: 10px;
+
+    outline: none;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+#modal select:focus,
+#modal input[type="date"]:focus {
+    border-color: #16C784;
+    box-shadow: 0 0 0 2px rgba(22, 199, 132, 0.15);
+}
+
+#modal select {
+    cursor: pointer;
+}
+
+#modal select option {
+    background: #111720;
+    color: #ffffff;
+}
+
+#modal input[type="date"] {
+    color-scheme: dark;
+}
