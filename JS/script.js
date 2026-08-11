@@ -294,7 +294,7 @@ botaoSalvar.addEventListener("click", function () {
             datasets: [{
                 label: "Valor",
                 data: [receitas, despesas],
-                backgroundColor: ["#45b46a", "#a02f34"],
+                backgroundColor: ["#45b46a", "#9c272d"],
                 animation: {
                     duration: 900,
                 }
