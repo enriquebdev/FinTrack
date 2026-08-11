@@ -122,7 +122,7 @@ function removerTransacao(index) {
 
     atualizarCards();
     mostrarTransacoes();
-
+    atualizarGraficos();
 
 }
 
@@ -224,6 +224,8 @@ botaoSalvar.addEventListener("click", function () {
 
     }
 
+    atualizarGraficos();
+
     salvarTransacoes();
 
     atualizarCards();
@@ -268,12 +270,60 @@ botaoSalvar.addEventListener("click", function () {
 
     let chartBarra;
 
+    function atualizarGraficos() {
+
+    const receitas = transacoes
+        .filter(transacao => transacao.tipo === "Receita")
+        .reduce((total, transacao) => total + transacao.valor, 0);
+
+    const despesas = transacoes
+        .filter(transacao => transacao.tipo === "Despesa")
+        .reduce((total, transacao) => total + transacao.valor, 0);
+
+    if (chartBarra) {
+        chartBarra.destroy();
+    }
+
+    chartBarra = new Chart(graficoBarra, {
+
+        type: "bar",
+
+        data: {
+            labels: ["Receitas", "Despesas"],
+
+            datasets: [{
+                label: "Valor",
+                data: [receitas, despesas],
+                backgroundColor: ["#45b46a", "#a02f34"],
+                animation: {
+                    duration: 900,
+                }
+                 
+
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
 
 
+    });
 
+   
+            }
 
+    
 atualizarCards();
 
 mostrarTransacoes();
+
+atualizarGraficos();
 
 lucide.createIcons();
