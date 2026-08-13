@@ -200,6 +200,7 @@ header{
 .grafico-barra{
     grid-column: span 12;
     min-height: 250px;
+    height: 2000px;
 }
 
 .categorias{

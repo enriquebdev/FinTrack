@@ -89,11 +89,11 @@ function mostrarTransacoes(listaTransacoes = transacoes) {
 
                     </span>
 
-                    <button class="btn-edit" onclick="editarTransacao(${indexOriginal})">
+                    <button type="button" class="btn-edit" onclick="editarTransacao(${indexOriginal})">
                         <i data-lucide="pencil"></i>
                     </button>
 
-                    <button class="btn-delete" onclick="removerTransacao(${indexOriginal})">
+                    <button type="button" class="btn-delete" onclick="removerTransacao(${indexOriginal})">
                         <i data-lucide="trash-2"></i>
                     </button>
 
@@ -113,22 +113,22 @@ function mostrarTransacoes(listaTransacoes = transacoes) {
 
 function removerTransacao(index) {
 
+    const posicaoScroll = window.scrollY;
 
     transacoes.splice(index, 1);
 
-
     salvarTransacoes();
-
 
     atualizarCards();
     mostrarTransacoes();
     atualizarGraficos();
 
+    window.scrollTo(0, posicaoScroll);
 }
 
 function editarTransacao(index) {
 
-    indiceEdicao = index;
+   const posicaoScroll = window.scrollY;
 
     const transacao = transacoes[index];
 
@@ -145,7 +145,8 @@ function editarTransacao(index) {
     indiceEdicao = index;
 
     modal.classList.add("active");
-
+    
+    window.scrollTo(0, posicaoScroll);
 }
 
 abrirModal.addEventListener("click", function () {
@@ -256,6 +257,19 @@ botaoSalvar.addEventListener("click", function () {
                 .toLowerCase()
                 .includes(texto);
 
+
+    const resultado = transacoes.filter(transacao => {
+
+    const correspondePesquisa =
+        transacao.descricao.toLowerCase().includes(pesquisa);
+
+    const correspondeTipo =
+        filtroTipo.value === "Todos" ||
+        transacao.tipo === filtroTipo.value;
+
+    return correspondePesquisa && correspondeTipo;
+    console.log(resultado);
+});
         });
 
         mostrarTransacoes(resultado);
@@ -273,12 +287,13 @@ botaoSalvar.addEventListener("click", function () {
     function atualizarGraficos() {
 
     const receitas = transacoes
-        .filter(transacao => transacao.tipo === "Receita")
+        .filter(transacao => transacao && transacao.tipo === "Receita")
         .reduce((total, transacao) => total + transacao.valor, 0);
 
     const despesas = transacoes
-        .filter(transacao => transacao.tipo === "Despesa")
+        .filter(transacao => transacao && transacao.tipo === "Despesa")
         .reduce((total, transacao) => total + transacao.valor, 0);
+
 
     if (chartBarra) {
         chartBarra.destroy();
@@ -289,18 +304,21 @@ botaoSalvar.addEventListener("click", function () {
         type: "bar",
 
         data: {
+
             labels: ["Receitas", "Despesas"],
 
             datasets: [{
-                label: "Valor",
-                data: [receitas, despesas],
-                backgroundColor: ["#45b46a", "#9c272d"],
-                animation: {
-                    duration: 900,
-                }
-                 
+            responsive: true,
+            maintainAspectRatio: false,
 
+            label: "Valor",
+            responsive: true,
+            maintainAspectRatio: false,
+            data: [receitas, despesas],
+
+            backgroundColor: ["#45b46a", "#a02f34"]
             }]
+
         },
 
         options: {
@@ -313,13 +331,156 @@ botaoSalvar.addEventListener("click", function () {
             }
         }
 
+    });
+
+
+    const transacoesComData = transacoes
+        .filter(transacao => transacao && transacao.data)
+        .sort((a, b) => new Date(a.data) - new Date(b.data));
+
+
+    const datas = [...new Set(
+        transacoesComData.map(transacao => transacao.data)
+    )];
+
+
+    const valoresReceitas = datas.map(data => {
+
+        return transacoesComData
+            .filter(transacao =>
+                transacao.data === data &&
+                transacao.tipo === "Receita"
+            )
+            .reduce((total, transacao) => total + Number(transacao.valor), 0);
 
     });
 
-   
+
+    const valoresDespesas = datas.map(data => {
+
+        return transacoesComData
+            .filter(transacao =>
+                transacao.data === data &&
+                transacao.tipo === "Despesa"
+            )
+            .reduce((total, transacao) => total + transacao.valor, 0);
+
+    });
+
+
+    if (chartLinha) {
+        chartLinha.destroy();
+    }
+
+
+    chartLinha = new Chart(graficoLinha, {
+
+        type: "line",
+
+        data: {
+
+            labels: datas.map(data => {
+
+                const [ano, mes, dia] = data.split("-");
+
+                return `${dia}/${mes}/${ano}`;
+
+            }),
+
+            datasets: [
+
+                {
+                    label: "Receitas",
+
+                    data: valoresReceitas,
+
+                    borderColor: "#45b46a",
+
+                    backgroundColor: "#45b46a",
+
+                      
+
+                    tension: 0.3
+                },
+
+                {
+                    label: "Despesas",
+
+                    data: valoresDespesas,
+
+                    borderColor: "#a02f34",
+
+                    backgroundColor: "#a02f34",
+
+                    tension: 0.3
+                }
+
+            ]
+
+        },
+
+           options: {
+
+        responsive: true,
+
+        interaction: {
+            intersect: false,
+            mode: "index"
+        },
+
+        scales: {
+
+            y: {
+                beginAtZero: true
             }
 
-    
+        }
+
+    }
+
+}); 
+    if (chartPizza) {
+            chartPizza.destroy();
+        }
+
+    const categoriasUsadas = [...new Set(
+    transacoes.map(transacao => transacao.categoria)
+)];
+
+    chartPizza = new Chart(graficoPizza, {
+
+        type: "doughnut",
+
+        data: {
+
+        labels: categoriasUsadas,
+            datasets: [{
+                data: categoriasUsadas.map(categoria => {
+
+                    return transacoes
+                        .filter(transacao => transacao.categoria === categoria)
+                        .reduce((total, transacao) => total + transacao.valor, 0);
+            }),
+                backgroundColor: ["#b4a345", "#a02f67", "#4556b4", "#a02f34", "#53a034", "#5d34a0", "#f1f5f5"],
+                    
+            }],
+            
+            options: {
+                        responsive: true,
+
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+            },
+        
+});
+console.log(chartPizza);
+} 
+
+
 atualizarCards();
 
 mostrarTransacoes();
