@@ -1,4 +1,4 @@
-💰 FinTrack Dashboard
+ FinTrack Dashboard
 
 O FinTrack Dashboard é uma aplicação web desenvolvida para auxiliar no controle de finanças pessoais por meio de uma interface moderna, intuitiva e responsiva.
 
