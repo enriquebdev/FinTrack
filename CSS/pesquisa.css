@@ -287,6 +287,28 @@
     grid-column:span 6;
 
 }
+.select-container {
+    position: relative;
+}
+
+.select-container > svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.select-container select {
+    padding-left: 40px;
+}
+ .search select{
+    
+    color: aliceblue;
+    background: var(--card);
+    border: none;
+    transition: .25s;
+}
 @media (max-width: 900px) {
 
     .saldo,
@@ -296,5 +318,9 @@
         grid-column: span 6;
         
     }
+.grafico-linha,
+.grafico-pizza {
+    grid-column: span 12;
+}
 
 }
