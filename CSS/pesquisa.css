@@ -287,3 +287,14 @@
     grid-column:span 6;
 
 }
+@media (max-width: 900px) {
+
+    .saldo,
+    .receitas,
+    .despesas,
+    .meta {
+        grid-column: span 6;
+        
+    }
+
+}
