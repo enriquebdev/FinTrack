@@ -278,6 +278,7 @@ botaoSalvar.addEventListener("click", function () {
     });
 
 
+
     let chartLinha;
 
     let chartPizza;
@@ -295,6 +296,9 @@ botaoSalvar.addEventListener("click", function () {
         .reduce((total, transacao) => total + transacao.valor, 0);
 
 
+
+
+// Gráfico de barras
     if (chartBarra) {
         chartBarra.destroy();
     }
@@ -308,23 +312,50 @@ botaoSalvar.addEventListener("click", function () {
             labels: ["Receitas", "Despesas"],
 
             datasets: [{
-            responsive: true,
-            maintainAspectRatio: false,
 
-            label: "Valor",
-            responsive: true,
-            maintainAspectRatio: false,
-            data: [receitas, despesas],
+                label: "Valor",
+                responsive: true,
+                maintainAspectRatio: false,
+                data: [receitas, despesas],
 
-            backgroundColor: ["#45b46a", "#a02f34"]
+                backgroundColor: ["#45b46a", "#a02f34"]
             }]
 
         },
 
         options: {
             responsive: true,
+            maintainAspectRatio: true,
+            
+            scales: {
+    y: {
+        beginAtZero: true,
+
+        ticks: {
+            callback: function(valor) {
+                return valor.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                });
+            }
+        }
+    }
+},
+            responsive: true,
 
             plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+
+                            return context.raw.toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL"
+                            });
+
+                    }
+    }
+},
                 legend: {
                     display: false
                 }
@@ -333,6 +364,9 @@ botaoSalvar.addEventListener("click", function () {
 
     });
 
+
+    
+// Gráfico de linha
 
     const transacoesComData = transacoes
         .filter(transacao => transacao && transacao.data)
@@ -354,8 +388,6 @@ botaoSalvar.addEventListener("click", function () {
             .reduce((total, transacao) => total + Number(transacao.valor), 0);
 
     });
-
-
     const valoresDespesas = datas.map(data => {
 
         return transacoesComData
@@ -366,60 +398,44 @@ botaoSalvar.addEventListener("click", function () {
             .reduce((total, transacao) => total + transacao.valor, 0);
 
     });
-
-
     if (chartLinha) {
         chartLinha.destroy();
     }
 
-
     chartLinha = new Chart(graficoLinha, {
 
-        type: "line",
+    type: "line",
 
-        data: {
+    data: {
 
-            labels: datas.map(data => {
+        labels: datas.map(data => {
 
-                const [ano, mes, dia] = data.split("-");
+            const [ano, mes, dia] = data.split("-");
 
-                return `${dia}/${mes}/${ano}`;
+            return `${dia}/${mes}/${ano}`;
 
-            }),
+        }),
 
-            datasets: [
+        datasets: [
+            {
+                label: "Receitas",
+                data: valoresReceitas,
+                borderColor: "#45b46a",
+                backgroundColor: "#45b46a",
+                tension: 0.3
+            },
+            {
+                label: "Despesas",
+                data: valoresDespesas,
+                borderColor: "#a02f34",
+                backgroundColor: "#a02f34",
+                tension: 0.3
+            }
+        ]
 
-                {
-                    label: "Receitas",
+    },
 
-                    data: valoresReceitas,
-
-                    borderColor: "#45b46a",
-
-                    backgroundColor: "#45b46a",
-
-                      
-
-                    tension: 0.3
-                },
-
-                {
-                    label: "Despesas",
-
-                    data: valoresDespesas,
-
-                    borderColor: "#a02f34",
-
-                    backgroundColor: "#a02f34",
-
-                    tension: 0.3
-                }
-
-            ]
-
-        },
-
-           options: {
+    options: {
 
         responsive: true,
 
@@ -431,14 +447,47 @@ botaoSalvar.addEventListener("click", function () {
         scales: {
 
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+
+                ticks: {
+                    callback: function(valor) {
+
+                        return valor.toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL"
+                        });
+
+                    }
+                }
+            }
+
+        },
+
+        plugins: {
+
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+
+                        const valor = context.raw;
+
+                        return `${context.dataset.label}: ${valor.toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL"
+                        })}`;
+
+                    }
+                }
             }
 
         }
 
     }
 
-}); 
+});
+
+// Gráfico de pizza
+
     if (chartPizza) {
             chartPizza.destroy();
         }
@@ -447,37 +496,71 @@ botaoSalvar.addEventListener("click", function () {
     transacoes.map(transacao => transacao.categoria)
 )];
 
-    chartPizza = new Chart(graficoPizza, {
+   chartPizza = new Chart(graficoPizza, {
 
-        type: "doughnut",
+    type: "doughnut",
 
-        data: {
+    data: {
 
         labels: categoriasUsadas,
-            datasets: [{
-                data: categoriasUsadas.map(categoria => {
 
-                    return transacoes
-                        .filter(transacao => transacao.categoria === categoria)
-                        .reduce((total, transacao) => total + transacao.valor, 0);
+        datasets: [{
+            data: categoriasUsadas.map(categoria => {
+
+                return transacoes
+                    .filter(transacao => transacao.categoria === categoria)
+                    .reduce((total, transacao) => total + transacao.valor, 0);
+
             }),
-                backgroundColor: ["#b4a345", "#a02f67", "#4556b4", "#a02f34", "#53a034", "#5d34a0", "#f1f5f5"],
-                    
-            }],
-            
-            options: {
-                        responsive: true,
 
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        }
-                    }
+            backgroundColor: [
+                "#b4a345",
+                "#a02f67",
+                "#4556b4",
+                "#a02f34",
+                "#53a034",
+                "#5d34a0",
+                "#f1f5f5"
+            ]
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+                display: true,
+                position: "top",
+
+                labels: {
+                    padding: 20,
+                }
+
             },
-        
+
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+
+                        return context.raw.toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL"
+                        });
+
+                    }
+                }
+            }
+
+        }
+
+    }
+
 });
-console.log(chartPizza);
+
 } 
 
 

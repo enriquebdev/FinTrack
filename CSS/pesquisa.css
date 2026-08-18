@@ -299,11 +299,10 @@
     pointer-events: none;
 }
 
-.select-container select {
-    padding-left: 40px;
-}
+
  .search select{
-    
+    text-align: center;
+    width: 100px;
     color: aliceblue;
     background: var(--card);
     border: none;
