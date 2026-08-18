@@ -428,7 +428,7 @@ botaoSalvar.addEventListener("click", function () {
                 label: "Despesas",
                 data: valoresDespesas,
                 borderColor: "#a02f34",
-                backgroundColor: "#a02f34",
+                backgroundColor: "#a02f35dc",
                 tension: 0.3
             }
         ]
