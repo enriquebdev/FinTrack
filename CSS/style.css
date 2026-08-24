@@ -205,10 +205,13 @@ header{
 
 .categorias{
     grid-column: span 6;
+    
 }
 
 .transacoes{
+    height: 500px;
     grid-column: span 6;
+    
 }
 .content{
     margin-left: 260px;

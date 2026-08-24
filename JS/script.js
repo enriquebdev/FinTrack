@@ -7,6 +7,9 @@ const data = document.querySelector("#data").value;
 const lista = document.querySelector("#lista-transacoes");
 
 const filtroTipo = document.querySelector("#filtro-tipo");
+const filtroMes = document.querySelector("#filtro-mes");
+
+const limparMes = document.querySelector("#limpar-mes");
 
 const modal = document.querySelector("#modal");
 const abrirModal = document.querySelector("#adicionar");
@@ -116,18 +119,33 @@ function mostrarTransacoes(listaTransacoes = transacoes) {
 function aplicarFiltro() {
 
     const tipoSelecionado = filtroTipo.value;
+    const mesSelecionado = filtroMes.value;
 
     const transacoesFiltradas = transacoes.filter(transacao => {
 
-        if (tipoSelecionado === "Todos") {
-            return true;
-        }
+        const correspondeTipo =
+            tipoSelecionado === "Todos" ||
+            transacao.tipo === tipoSelecionado;
 
-        return transacao.tipo === tipoSelecionado;
+
+        const correspondeMes =
+            mesSelecionado === "" ||
+            transacao.data.slice(0, 7) === mesSelecionado;
+
+
+        return correspondeTipo && correspondeMes;
+
     });
 
     mostrarTransacoes(transacoesFiltradas);
 }
+
+limparMes.addEventListener("click", () => {
+
+    filtroMes.value = "";
+
+    aplicarFiltro();
+});
 function removerTransacao(index) {
 
     const posicaoScroll = window.scrollY;
@@ -179,6 +197,7 @@ fecharModal.addEventListener("click", function () {
 
 botaoSalvar.addEventListener("click", function () {
 
+    const posicaoScroll = window.scrollY;
 
     const descricao = document.querySelector("#descricao").value;
 
@@ -212,9 +231,6 @@ botaoSalvar.addEventListener("click", function () {
 
 
     }
-
-
-
     const novaTransacao = {
 
     descricao,
@@ -222,7 +238,6 @@ botaoSalvar.addEventListener("click", function () {
     valor,
     categoria,
     data
-
 }
 
 
@@ -237,7 +252,9 @@ botaoSalvar.addEventListener("click", function () {
         indiceEdicao = null;
 
     }
-
+requestAnimationFrame(() => {
+        window.scrollTo(0, posicaoScroll);
+    });
     atualizarGraficos();
 
     salvarTransacoes();
@@ -260,54 +277,40 @@ botaoSalvar.addEventListener("click", function () {
 
 });
 
-    pesquisa.addEventListener("input", function(){
+    function aplicarFiltro() {
 
-        const texto = pesquisa.value.toLowerCase();
-
-        const resultado = transacoes.filter(function(transacao){
-
-            return transacao.descricao
-                .toLowerCase()
-                .includes(texto);
-
-
-    const resultado = transacoes.filter(transacao => {
-
-    const correspondePesquisa =
-        transacao.descricao.toLowerCase().includes(pesquisa);
-
-    const correspondeTipo =
-        filtroTipo.value === "Todos" ||
-        transacao.tipo === filtroTipo.value;
-
-    return correspondePesquisa && correspondeTipo;
-    console.log(resultado);
-});
-        });
-
-        mostrarTransacoes(resultado);
-        console.log(resultado);
-
-    });
-
-
-
-
-filtroTipo.addEventListener("change", () => {
-
+    const textoPesquisa = pesquisa.value.toLowerCase();
     const tipoSelecionado = filtroTipo.value;
+    const mesSelecionado = filtroMes.value;
 
     const transacoesFiltradas = transacoes.filter(transacao => {
 
-        if (tipoSelecionado === "Todos") {
-            return true;
-        }
+        const correspondePesquisa =
+            transacao.descricao
+                .toLowerCase()
+                .includes(textoPesquisa);
 
-        return transacao.tipo === tipoSelecionado;
+        const correspondeTipo =
+            tipoSelecionado === "Todos" ||
+            transacao.tipo === tipoSelecionado;
+
+        const correspondeMes =
+            mesSelecionado === "" ||
+            transacao.data.slice(0, 7) === mesSelecionado;
+
+        return correspondePesquisa &&
+               correspondeTipo &&
+               correspondeMes;
     });
+    pesquisa.addEventListener("input", aplicarFiltro);
+
+    filtroTipo.addEventListener("change", aplicarFiltro);
+
+    filtroMes.addEventListener("change", aplicarFiltro);
 
     mostrarTransacoes(transacoesFiltradas);
-});
+}
+
 
     let chartLinha;
 

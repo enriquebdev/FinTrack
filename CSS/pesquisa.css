@@ -288,7 +288,10 @@
 
 }
 .select-container {
+    padding-left: 10PX  ;
     position: relative;
+    display:flex;
+    align-items:center;
 }
 
 .select-container > svg {
@@ -310,7 +313,8 @@
 }
 
 #filtro-tipo{
-    margin-right: 350px;
+    
+    cursor: pointer;
     text-align: center;
     width: 90px;
     font-size: 15px;
@@ -318,6 +322,23 @@
     color: aliceblue;
     background-color: var(--card);
     border: var(--border);
+}
+#filtro-mes{
+    margin-right:10px ;
+    cursor: pointer;
+    padding: 10PX;
+    color: aliceblue;
+    background-color: var(--card);
+    border: transparent;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#limpar-mes{
+    color: #b95b5b;
+    cursor: pointer;
+    background-color: var(--card);
+    padding: 10px;
+    border: none;
 }
 #btn-editar{
     color: #ffffff;

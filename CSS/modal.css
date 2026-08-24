@@ -1,26 +1,19 @@
 /* MODAL */
 
-.modal{
+.modal {
+    position: fixed;
+    inset: 0;
 
-    position:fixed;
+    display: none;
 
-    top:0;
-    left:0;
+    justify-content: center;
+    align-items: center;
 
-    width:100%;
-    height:100%;
+    background: rgba(0, 0, 0, .65);
 
-    display:none;
+    z-index: 1000;
 
-    justify-content:center;
-    align-items:center;
-
-    background:rgba(0,0,0,.65);
-
-    backdrop-filter:blur(5px);
-
-    z-index:1000;
-
+    overflow-y: auto;
 }
 
 
