@@ -97,13 +97,7 @@
                         type="text"
                         placeholder="Buscar transações...">
                     
-                        <div class="select-container">
-                            <select id="filtro-tipo">
-                                <option value="Todos"  >Todos</option>
-                                <option value="Receita">Receitas</option>
-                                <option value="Despesa">Despesas</option>
-                            </select>
-                        </div>
+                        
                 </div>
 
                 <button class="icon-btn">
@@ -253,12 +247,21 @@
 
                         <div class="card-header">
 
+                            
                             <h3>Últimas Transações</h3>
 
+                            <div class="select-container" >
+                                <select id="filtro-tipo">   
+                                    <option value="" disabled selected>Tipo</option>
+                                    <option value="Todos"  >Todos</option>
+                                    <option value="Receita">Receitas</option>
+                                    <option value="Despesa">Despesas</option>
+                                </select>
+                                </div>
                             <button id="adicionar" class="btn-add">
                                 Nova
                             </button>
-
+                            
                         </div>
 
                         <div id="lista-transacoes"></div>
@@ -368,7 +371,9 @@
 
                 </div>
 
+                
 
+            
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>   
             <script src="JS/script.js"></script>
 

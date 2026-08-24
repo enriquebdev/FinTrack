@@ -6,6 +6,8 @@ const data = document.querySelector("#data").value;
 
 const lista = document.querySelector("#lista-transacoes");
 
+const filtroTipo = document.querySelector("#filtro-tipo");
+
 const modal = document.querySelector("#modal");
 const abrirModal = document.querySelector("#adicionar");
 const fecharModal = document.querySelector("#fechar-modal");
@@ -77,6 +79,8 @@ function mostrarTransacoes(listaTransacoes = transacoes) {
                     <h4>${transacao.descricao}</h4>
 
                     <p>${transacao.tipo}</p>
+                        <p>${transacao.categoria}</p>
+                        <p>${transacao.data}</p>
 
                 </div>
 
@@ -109,8 +113,21 @@ function mostrarTransacoes(listaTransacoes = transacoes) {
     lucide.createIcons();
 
 }
+function aplicarFiltro() {
 
+    const tipoSelecionado = filtroTipo.value;
 
+    const transacoesFiltradas = transacoes.filter(transacao => {
+
+        if (tipoSelecionado === "Todos") {
+            return true;
+        }
+
+        return transacao.tipo === tipoSelecionado;
+    });
+
+    mostrarTransacoes(transacoesFiltradas);
+}
 function removerTransacao(index) {
 
     const posicaoScroll = window.scrollY;
@@ -120,7 +137,7 @@ function removerTransacao(index) {
     salvarTransacoes();
 
     atualizarCards();
-    mostrarTransacoes();
+    aplicarFiltro();
     atualizarGraficos();
 
     window.scrollTo(0, posicaoScroll);
@@ -128,25 +145,21 @@ function removerTransacao(index) {
 
 function editarTransacao(index) {
 
-   const posicaoScroll = window.scrollY;
+    
 
     const transacao = transacoes[index];
 
     document.querySelector("#descricao").value = transacao.descricao;
-
     document.querySelector("#valor").value = transacao.valor;
-
     document.querySelector("#tipo").value = transacao.tipo;
-
     document.querySelector("#categoria").value = transacao.categoria;
-
     document.querySelector("#data").value = transacao.data;
 
     indiceEdicao = index;
 
     modal.classList.add("active");
+
     
-    window.scrollTo(0, posicaoScroll);
 }
 
 abrirModal.addEventListener("click", function () {
@@ -231,7 +244,7 @@ botaoSalvar.addEventListener("click", function () {
 
     atualizarCards();
 
-    mostrarTransacoes();
+    aplicarFiltro();
 
     modal.classList.remove("active");
 
@@ -278,6 +291,23 @@ botaoSalvar.addEventListener("click", function () {
     });
 
 
+
+
+filtroTipo.addEventListener("change", () => {
+
+    const tipoSelecionado = filtroTipo.value;
+
+    const transacoesFiltradas = transacoes.filter(transacao => {
+
+        if (tipoSelecionado === "Todos") {
+            return true;
+        }
+
+        return transacao.tipo === tipoSelecionado;
+    });
+
+    mostrarTransacoes(transacoesFiltradas);
+});
 
     let chartLinha;
 
@@ -564,9 +594,12 @@ botaoSalvar.addEventListener("click", function () {
 } 
 
 
+
+mostrarTransacoes()
+
 atualizarCards();
 
-mostrarTransacoes();
+aplicarFiltro();
 
 atualizarGraficos();
 

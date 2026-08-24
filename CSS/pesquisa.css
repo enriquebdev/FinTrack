@@ -308,6 +308,30 @@
     border: none;
     transition: .25s;
 }
+
+#filtro-tipo{
+    margin-right: 350px;
+    text-align: center;
+    width: 90px;
+    font-size: 15px;
+    font: bold;
+    color: aliceblue;
+    background-color: var(--card);
+    border: var(--border);
+}
+#btn-editar{
+    color: #ffffff;
+    cursor: pointer;
+}
+#btn-excluir{
+    width: 20px;
+    height: 20px;
+    
+    color: #FF5A5A;
+    cursor: pointer;
+    transition: .25s;
+}
+
 @media (max-width: 900px) {
 
     .saldo,
@@ -321,5 +345,90 @@
 .grafico-pizza {
     grid-column: span 12;
 }
-
+.sidebar{
+    position: fixed;
 }
+}
+
+
+@media (max-width: 600px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    aside {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    main {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .graficos {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .grafico {
+        width: 100%;
+    }
+
+    .transacoes {
+        overflow-x: auto;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    #pesquisa {
+        width: 100%;
+    }
+
+    #adicionar {
+        width: 100%;
+    }
+}
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 70px;
+        padding: 20px 0;
+    }
+ .sidebar a {
+        gap: 0;
+        padding: 12px 0;
+        justify-content: center;
+    }
+
+    .sidebar span,
+    .sidebar p {
+        display: none;
+    }
+
+    main {
+        margin-left: 70px;
+        padding: 15px;
+        width: calc(100% - 70px);
+    }
+
+    .saldo,
+    .receitas,
+    .despesas,
+    .metas {
+        grid-column: span 12;
+    }
+}
+   
