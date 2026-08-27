@@ -311,7 +311,6 @@ requestAnimationFrame(() => {
     mostrarTransacoes(transacoesFiltradas);
 }
 
-
     let chartLinha;
 
     let chartPizza;
@@ -597,6 +596,35 @@ requestAnimationFrame(() => {
 } 
 
 
+
+
+
+
+fetch("https://jsonplaceholder.typicode.com/users")
+    .then(resposta => resposta.json())
+    .then(dados => {
+        console.log(dados);
+    });
+async function carregarTransacoesDaApi() {
+    const resposta = await fetch("./dados/arquivo-inexistente.json");
+
+    if (!resposta.ok) {
+        throw new Error("Não foi possível carregar as transações");
+    }
+
+    const dados = await resposta.json();
+
+    transacoes = dados;
+    mostrarTransacoes(transacoes);
+}
+
+
+
+
+
+
+
+carregarTransacoesDaApi();
 
 mostrarTransacoes()
 

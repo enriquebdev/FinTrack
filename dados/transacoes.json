@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "descricao": "Salário",
+        "valor": 3500,
+        "tipo": "Receita",
+        "categoria": "Trabalho",
+        "data": "2026-08-10"
+    },
+    {
+        "id": 2,
+        "descricao": "Supermercado",
+        "valor": 250,
+        "tipo": "Despesa",
+        "categoria": "Alimentação",
+        "data": "2026-08-15"
+    }
+]   

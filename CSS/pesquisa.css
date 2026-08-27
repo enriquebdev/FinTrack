@@ -261,7 +261,7 @@
 }
 
 .grafico-pizza{
-
+    
     grid-column:span 4;
 
     min-height:300px;
