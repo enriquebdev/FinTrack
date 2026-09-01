@@ -195,7 +195,7 @@ fecharModal.addEventListener("click", function () {
 });
 
 
-botaoSalvar.addEventListener("click", function () {
+botaoSalvar.addEventListener("click", async function () {
 
     const posicaoScroll = window.scrollY;
 
@@ -239,19 +239,16 @@ botaoSalvar.addEventListener("click", function () {
     categoria,
     data
 }
-
+    const resultadoApi = await enviarTransacao(novaTransacao);
+    console.log(resultadoApi);
 
     if (indiceEdicao === null) {
-
-        transacoes.push(novaTransacao);
-
-    } else {
-
-        transacoes[indiceEdicao] = novaTransacao;
-
-        indiceEdicao = null;
-
-    }
+    const resultadoApi = await enviarTransacao(novaTransacao);
+    transacoes.push(resultadoApi);
+} else {
+    transacoes[indiceEdicao] = novaTransacao;
+    indiceEdicao = null;
+}
 requestAnimationFrame(() => {
         window.scrollTo(0, posicaoScroll);
     });
@@ -598,33 +595,58 @@ requestAnimationFrame(() => {
 
 
 
-
-
-fetch("https://jsonplaceholder.typicode.com/users")
-    .then(resposta => resposta.json())
-    .then(dados => {
-        console.log(dados);
-    });
 async function carregarTransacoesDaApi() {
-    const resposta = await fetch("./dados/arquivo-inexistente.json");
+    try {
+        const resposta = await fetch("./dados/transacoes.json");
 
-    if (!resposta.ok) {
-        throw new Error("Não foi possível carregar as transações");
+        if (!resposta.ok) {
+            throw new Error(`Erro HTTP: ${resposta.status}`);
+        }
+
+        const dados = await resposta.json();
+
+        transacoes = dados;
+        mostrarTransacoes(transacoes);
+        atualizarCards();
+        atualizarGraficos();
+
+    } catch (erro) {
+        console.error("Erro ao carregar transações:", erro);
+        lista.textContent = "Não foi possível carregar as transações.";
     }
-
-    const dados = await resposta.json();
-
-    transacoes = dados;
-    mostrarTransacoes(transacoes);
 }
 
+async function enviarTransacao(transacao) {
+    const resposta = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(transacao)
+        }
+    );
 
+    if (!resposta.ok) {
+        throw new Error("Não foi possível cadastrar a transação");
+    }
 
-
-
-
+    const transacaoCadastrada = await resposta.json();
+    console.log(transacaoCadastrada);
+    
+    return transacaoCadastrada;
+  
+}
 
 carregarTransacoesDaApi();
+
+
+
+
+
+
+
 
 mostrarTransacoes()
 
