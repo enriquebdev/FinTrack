@@ -146,9 +146,13 @@ limparMes.addEventListener("click", () => {
 
     aplicarFiltro();
 });
-function removerTransacao(index) {
+async function removerTransacao(index) {
 
     const posicaoScroll = window.scrollY;
+
+    const transacaoSelecionada = transacoes[index];
+
+    await excluirTransacaoDaApi(transacaoSelecionada.id);
 
     transacoes.splice(index, 1);
 
@@ -164,7 +168,6 @@ function removerTransacao(index) {
 function editarTransacao(index) {
 
     
-
     const transacao = transacoes[index];
 
     document.querySelector("#descricao").value = transacao.descricao;
@@ -239,14 +242,19 @@ botaoSalvar.addEventListener("click", async function () {
     categoria,
     data
 }
-    const resultadoApi = await enviarTransacao(novaTransacao);
-    console.log(resultadoApi);
-
+    
     if (indiceEdicao === null) {
     const resultadoApi = await enviarTransacao(novaTransacao);
     transacoes.push(resultadoApi);
-} else {
-    transacoes[indiceEdicao] = novaTransacao;
+}  else {
+    const transacaoOriginal = transacoes[indiceEdicao];
+
+    const resultadoAtualizacao = await atualizarTransacao(
+        transacaoOriginal.id,
+        novaTransacao
+    );
+
+    transacoes[indiceEdicao] = resultadoAtualizacao;
     indiceEdicao = null;
 }
 requestAnimationFrame(() => {
@@ -308,6 +316,8 @@ requestAnimationFrame(() => {
     mostrarTransacoes(transacoesFiltradas);
 }
 
+// Gráficos
+
     let chartLinha;
 
     let chartPizza;
@@ -328,6 +338,7 @@ requestAnimationFrame(() => {
 
 
 // Gráfico de barras
+
     if (chartBarra) {
         chartBarra.destroy();
     }
@@ -392,9 +403,8 @@ requestAnimationFrame(() => {
         }
 
     });
+   
 
-
-    
 // Gráfico de linha
 
     const transacoesComData = transacoes
@@ -515,6 +525,7 @@ requestAnimationFrame(() => {
 
 });
 
+
 // Gráfico de pizza
 
     if (chartPizza) {
@@ -593,7 +604,7 @@ requestAnimationFrame(() => {
 } 
 
 
-
+// Funções para interagir com a API
 
 async function carregarTransacoesDaApi() {
     try {
@@ -609,12 +620,13 @@ async function carregarTransacoesDaApi() {
         mostrarTransacoes(transacoes);
         atualizarCards();
         atualizarGraficos();
-
     } catch (erro) {
         console.error("Erro ao carregar transações:", erro);
         lista.textContent = "Não foi possível carregar as transações.";
     }
 }
+
+// Função para enviar uma nova transação para a API
 
 async function enviarTransacao(transacao) {
     const resposta = await fetch(
@@ -633,19 +645,50 @@ async function enviarTransacao(transacao) {
     }
 
     const transacaoCadastrada = await resposta.json();
-    console.log(transacaoCadastrada);
-    
+
     return transacaoCadastrada;
-  
 }
 
+// Função para atualizar uma transação na API
+
+async function atualizarTransacao(id, transacao) {
+    const resposta = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(transacao)
+        }
+    );
+
+    if (!resposta.ok) {
+        throw new Error("Não foi possível atualizar a transação");
+    }
+
+    const transacaoAtualizada = await resposta.json();
+
+    return transacaoAtualizada;
+}
+
+// Função para excluir uma transação na API
+
+async function excluirTransacaoDaApi(id) {
+    const resposta = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${id}`,
+        {
+            method: "DELETE"
+        }
+    );
+    if (!resposta.ok) {
+    throw new Error("Não foi possível excluir a transação");
+}
+    return true;
+}
+
+
 carregarTransacoesDaApi();
-
-
-
-
-
-
 
 
 mostrarTransacoes()
