@@ -608,7 +608,7 @@ requestAnimationFrame(() => {
 
 async function carregarTransacoesDaApi() {
     try {
-        const resposta = await fetch("./dados/transacoes.json");
+        const resposta = await fetch("http://localhost:3000/transacoes");
 
         if (!resposta.ok) {
             throw new Error(`Erro HTTP: ${resposta.status}`);
