@@ -23,21 +23,19 @@ Chart.js
 LocalStorage
 Git e GitHub
 
-Durante o projeto estão sendo aplicados os seguintes fundamentos:
+### Implementado
 
-Manipulação do DOM
-Eventos
-Arrays e Objetos
-Organização de código
-Persistência de dados
-Responsividade
-Estruturação de aplicações JavaScript
+- CRUD de transações e armazenamento com LocalStorage
+- Pesquisa e filtros por tipo, categoria e data
+- Cards financeiros e gráficos com Chart.js
+- Consumo de dados com Fetch API e async/await
+- Simulação de operações POST, PUT e DELETE com JSONPlaceholder
+- Tratamento de erros e atualização do DOM
+- Estrutura inicial do backend com Node.js e Express
 
-Futuras implementações:
+### Próximos passos
 
-Exportação de dados
-Login de usuário
-Integração com API
-Back-end utilizando Node.js e Express
-Banco de dados PostgreSQL
-Migração para React
+- Criar as rotas da API de transações
+- Implementar persistência com PostgreSQL
+- Conectar o Front-end à API própria
+- Adicionar autenticação
