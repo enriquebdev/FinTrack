@@ -630,7 +630,7 @@ async function carregarTransacoesDaApi() {
 
 async function enviarTransacao(transacao) {
     const resposta = await fetch(
-        "https://jsonplaceholder.typicode.com/posts",
+        "http://localhost:3000/transacoes",
         {
             method: "POST",
             headers: {
