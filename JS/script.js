@@ -234,6 +234,10 @@ botaoSalvar.addEventListener("click", async function () {
 
 
     }
+    if (data === "") {
+    alert("Selecione uma data.");
+    return;
+}
     const novaTransacao = {
 
     descricao,

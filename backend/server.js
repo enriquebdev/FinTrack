@@ -47,6 +47,52 @@ app.get("/transacoes/:id", (req, res) => {
 
 app.post("/transacoes", (req, res) => {
     const novaTransacao = req.body;
+    if (
+    typeof novaTransacao.descricao !== "string" ||
+    novaTransacao.descricao.trim() === ""
+) {
+    return res.status(400).json({
+        mensagem: "A descrição é obrigatória"
+    });
+}
+if(
+    typeof novaTransacao.valor !== "number" ||
+    !Number.isFinite(novaTransacao.valor) ||
+    novaTransacao.valor <= 0
+) {
+    return res.status(400).json({
+        mensagem: "O valor deve ser um número maior que zero"
+    });
+}
+if(
+    typeof novaTransacao.tipo !== "string" ||
+    novaTransacao.tipo.trim() === ""
+) {
+    return res.status(400).json({
+        mensagem: "Selecione um tipo válido"
+    });
+}
+if(
+    typeof novaTransacao.categoria !== "string" ||
+    novaTransacao.categoria.trim() === ""
+) {
+    return res.status(400).json({
+        mensagem: "A categoria é obrigatória"
+    });
+}
+if (
+    typeof novaTransacao.data !== "string" ||
+    novaTransacao.data.trim() === "" ||
+    Number.isNaN(Date.parse(novaTransacao.data))
+) {
+    return res.status(400).json({
+        mensagem: "Informe uma data válida"
+    });
+}if (data === "") {
+   return res.status(400).json({
+        mensagem: "Selecione uma data."
+    });
+}
 
     novaTransacao.id = transacoes.length + 1;
     transacoes.push(novaTransacao);
