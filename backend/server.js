@@ -55,7 +55,29 @@ app.post("/transacoes", (req, res) => {
 
     res.status(201).json(novaTransacao);
 });
+app.put("/transacoes/:id", (req, res) => {
+    const id = Number(req.params.id);
 
+    const indice = transacoes.findIndex(
+        transacao => transacao.id === id
+    );
+
+    if (indice === -1) {
+        return res.status(404).json({
+            mensagem: "Transação não encontrada"
+        });
+    }
+
+    const transacaoAtualizada = {
+        id,
+        ...reqToken
+.body
+    };
+
+    transacoes[indice] = transacaoAtualizada;
+
+    res.json(transacaoAtualizada);
+});
 app.listen(3000, () => {
     console.log("Servidor do FinTrack iniciado na porta 3000");
 });
