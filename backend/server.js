@@ -23,6 +23,54 @@ const transacoes = [
     }
 ];
 
+//VALIDAR TRANSÇÕES
+function validarTransacao(transacao) {
+    if (
+        typeof transacao.descricao !== "string" ||
+        transacao.descricao.trim() === ""
+    ) {
+        return "A descrição é obrigatória";
+    }
+
+// VALIDA VALORES
+if (
+    typeof transacao.valor !== "number" ||
+    !Number.isFinite(transacao.valor) ||
+    transacao.valor <= 0
+) {
+    return "O valor deve ser um número maior que zero";
+}
+
+// VALIDA TIPO
+const tiposPermitidos = ["Receita", "Despesa"];
+
+if (!tiposPermitidos.includes(transacao.tipo)) {
+    return "O tipo deve ser Receita ou Despesa";
+}
+
+// VALIDA CATEGORIA
+if (
+    typeof transacao.categoria !== "string" ||
+    transacao.categoria.trim() === ""
+) {
+    return "A categoria é obrigatória";
+}
+
+// VALIDA DATA
+if (
+    typeof transacao.data !== "string" ||
+    transacao.data.trim() === "" ||
+    Number.isNaN(Date.parse(transacao.data))
+) {
+    return "Informe uma data válida";
+}
+
+
+    return null;
+}
+
+
+
 app.get("/", (req, res) => {
     res.send("Bem-vindo à API do FinTrack!");
 });
@@ -47,52 +95,14 @@ app.get("/transacoes/:id", (req, res) => {
 
 app.post("/transacoes", (req, res) => {
     const novaTransacao = req.body;
-    if (
-    typeof novaTransacao.descricao !== "string" ||
-    novaTransacao.descricao.trim() === ""
-) {
+    const erroValidacao = validarTransacao(novaTransacao);
+
+if (erroValidacao) {
     return res.status(400).json({
-        mensagem: "A descrição é obrigatória"
+        mensagem: erroValidacao
     });
 }
-if(
-    typeof novaTransacao.valor !== "number" ||
-    !Number.isFinite(novaTransacao.valor) ||
-    novaTransacao.valor <= 0
-) {
-    return res.status(400).json({
-        mensagem: "O valor deve ser um número maior que zero"
-    });
-}
-if(
-    typeof novaTransacao.tipo !== "string" ||
-    novaTransacao.tipo.trim() === ""
-) {
-    return res.status(400).json({
-        mensagem: "Selecione um tipo válido"
-    });
-}
-if(
-    typeof novaTransacao.categoria !== "string" ||
-    novaTransacao.categoria.trim() === ""
-) {
-    return res.status(400).json({
-        mensagem: "A categoria é obrigatória"
-    });
-}
-if (
-    typeof novaTransacao.data !== "string" ||
-    novaTransacao.data.trim() === "" ||
-    Number.isNaN(Date.parse(novaTransacao.data))
-) {
-    return res.status(400).json({
-        mensagem: "Informe uma data válida"
-    });
-}if (data === "") {
-   return res.status(400).json({
-        mensagem: "Selecione uma data."
-    });
-}
+    
 
     novaTransacao.id = transacoes.length + 1;
     transacoes.push(novaTransacao);
@@ -113,7 +123,13 @@ app.put("/transacoes/:id", (req, res) => {
             mensagem: "Transação não encontrada"
         });
     }
+const erroValidacao = validarTransacao(req.body);
 
+if (erroValidacao) {
+    return res.status(400).json({
+        mensagem: erroValidacao
+    });
+}
     const transacaoAtualizada = {
         id,
         ...req.body

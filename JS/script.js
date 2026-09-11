@@ -20,6 +20,8 @@ const pesquisa = document.querySelector("#pesquisa");
 
 let indiceEdicao = null;
 
+
+
 let transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
 
 const graficoLinha = document.querySelector("#graficoLinha");
