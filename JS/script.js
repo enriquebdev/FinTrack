@@ -653,7 +653,7 @@ async function enviarTransacao(transacao) {
 
 async function atualizarTransacao(id, transacao) {
     const resposta = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${id}`,
+        `http://localhost:3000/transacoes/${id}`,
         {
             method: "PUT",
             headers: {

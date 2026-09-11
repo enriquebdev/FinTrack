@@ -70,8 +70,7 @@ app.put("/transacoes/:id", (req, res) => {
 
     const transacaoAtualizada = {
         id,
-        ...reqToken
-.body
+        ...req.body
     };
 
     transacoes[indice] = transacaoAtualizada;
