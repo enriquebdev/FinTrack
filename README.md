@@ -25,17 +25,24 @@ Git e GitHub
 
 ### Implementado
 
-- CRUD de transações e armazenamento com LocalStorage
-- Pesquisa e filtros por tipo, categoria e data
-- Cards financeiros e gráficos com Chart.js
-- Consumo de dados com Fetch API e async/await
-- Simulação de operações POST, PUT e DELETE com JSONPlaceholder
-- Tratamento de erros e atualização do DOM
-- Estrutura inicial do backend com Node.js e Express
+-  Dashboard com cálculo automático de saldo, receitas e despesas.
+-  Cadastro e listagem de transações com descrição, valor, tipo, categoria e data.
+-  Validação de descrição e valor no formulário de cadastro.
+-  Pesquisa por descrição e filtros por tipo e mês.
+-  Gráficos com Chart.js: fluxo financeiro por data, distribuição por categoria e comparação entre receitas e despesas.
+-  Leitura e gravação de transações no LocalStorage.
+-  Backend com Node.js, Express e configuração de CORS para desenvolvimento local.
+-  Rotas da API própria para listar, consultar por ID e cadastrar transações, com armazenamento em memória.
+-  Integração do front-end com a API própria para listagem e cadastro usando Fetch API e async/await.
+-  Edição e exclusão no front-end com requisições simuladas pelo JSONPlaceholder e atualização do LocalStorage.
+-  Verificação de respostas HTTP e mensagem de erro ao carregar transações.
 
 ### Próximos passos
 
-- Criar as rotas da API de transações
-- Implementar persistência com PostgreSQL
-- Conectar o Front-end à API própria
-- Adicionar autenticação
+-  Concluir e corrigir a rota de atualização de transações na API própria.
+-  Implementar a rota de exclusão de transações.
+-  Integrar edição e exclusão do front-end à API própria, substituindo o JSONPlaceholder.
+-  Implementar persistência com PostgreSQL para manter os dados após reiniciar o servidor.
+-  Definir a sincronização entre LocalStorage e API para evitar divergências nos dados.
+-  Validar os dados no backend e melhorar o tratamento de erros de cadastro, edição e exclusão na interface.
+-  Adicionar autenticação e vincular as transações a cada usuário.
