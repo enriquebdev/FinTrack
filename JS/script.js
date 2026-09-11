@@ -676,7 +676,7 @@ async function atualizarTransacao(id, transacao) {
 
 async function excluirTransacaoDaApi(id) {
     const resposta = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${id}`,
+        `http://localhost:3000/transacoes/${id}`,
         {
             method: "DELETE"
         }
