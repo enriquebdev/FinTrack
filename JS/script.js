@@ -22,7 +22,7 @@ let indiceEdicao = null;
 
 
 
-let transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+let transacoes = [];
 
 const graficoLinha = document.querySelector("#graficoLinha");
 
@@ -30,15 +30,6 @@ const graficoPizza = document.querySelector("#graficoPizza");
 
 const graficoBarra = document.querySelector("#graficoBarra");
 
-
-function salvarTransacoes() {
-
-    localStorage.setItem(
-        "transacoes",
-        JSON.stringify(transacoes)
-    );
-
-}
 
 function atualizarCards() {
 
@@ -118,30 +109,6 @@ function mostrarTransacoes(listaTransacoes = transacoes) {
     lucide.createIcons();
 
 }
-function aplicarFiltro() {
-
-    const tipoSelecionado = filtroTipo.value;
-    const mesSelecionado = filtroMes.value;
-
-    const transacoesFiltradas = transacoes.filter(transacao => {
-
-        const correspondeTipo =
-            tipoSelecionado === "Todos" ||
-            transacao.tipo === tipoSelecionado;
-
-
-        const correspondeMes =
-            mesSelecionado === "" ||
-            transacao.data.slice(0, 7) === mesSelecionado;
-
-
-        return correspondeTipo && correspondeMes;
-
-    });
-
-    mostrarTransacoes(transacoesFiltradas);
-}
-
 limparMes.addEventListener("click", () => {
 
     filtroMes.value = "";
@@ -154,11 +121,15 @@ async function removerTransacao(index) {
 
     const transacaoSelecionada = transacoes[index];
 
-    await excluirTransacaoDaApi(transacaoSelecionada.id);
+    try {
+        await excluirTransacaoDaApi(transacaoSelecionada.id);
+    } catch (erro) {
+        console.error("Erro ao excluir transação:", erro);
+        alert(erro.message);
+        return;
+    }
 
     transacoes.splice(index, 1);
-
-    salvarTransacoes();
 
     atualizarCards();
     aplicarFiltro();
@@ -249,26 +220,29 @@ botaoSalvar.addEventListener("click", async function () {
     data
 }
     
-    if (indiceEdicao === null) {
-    const resultadoApi = await enviarTransacao(novaTransacao);
-    transacoes.push(resultadoApi);
-}  else {
-    const transacaoOriginal = transacoes[indiceEdicao];
+    try {
+        if (indiceEdicao === null) {
+            const resultadoApi = await enviarTransacao(novaTransacao);
+            transacoes.push(resultadoApi);
+        } else {
+            const transacaoOriginal = transacoes[indiceEdicao];
+            const resultadoAtualizacao = await atualizarTransacao(
+                transacaoOriginal.id,
+                novaTransacao
+            );
 
-    const resultadoAtualizacao = await atualizarTransacao(
-        transacaoOriginal.id,
-        novaTransacao
-    );
-
-    transacoes[indiceEdicao] = resultadoAtualizacao;
-    indiceEdicao = null;
-}
+            transacoes[indiceEdicao] = resultadoAtualizacao;
+            indiceEdicao = null;
+        }
+    } catch (erro) {
+        console.error("Erro ao salvar transação:", erro);
+        alert(erro.message);
+        return;
+    }
 requestAnimationFrame(() => {
         window.scrollTo(0, posicaoScroll);
     });
     atualizarGraficos();
-
-    salvarTransacoes();
 
     atualizarCards();
 
@@ -313,14 +287,12 @@ requestAnimationFrame(() => {
                correspondeTipo &&
                correspondeMes;
     });
-    pesquisa.addEventListener("input", aplicarFiltro);
-
-    filtroTipo.addEventListener("change", aplicarFiltro);
-
-    filtroMes.addEventListener("change", aplicarFiltro);
-
     mostrarTransacoes(transacoesFiltradas);
 }
+
+pesquisa.addEventListener("input", aplicarFiltro);
+filtroTipo.addEventListener("change", aplicarFiltro);
+filtroMes.addEventListener("change", aplicarFiltro);
 
 // Gráficos
 
@@ -623,7 +595,7 @@ async function carregarTransacoesDaApi() {
         const dados = await resposta.json();
 
         transacoes = dados;
-        mostrarTransacoes(transacoes);
+        aplicarFiltro();
         atualizarCards();
         atualizarGraficos();
     } catch (erro) {
@@ -695,14 +667,3 @@ async function excluirTransacaoDaApi(id) {
 
 
 carregarTransacoesDaApi();
-
-
-mostrarTransacoes()
-
-atualizarCards();
-
-aplicarFiltro();
-
-atualizarGraficos();
-
-lucide.createIcons();

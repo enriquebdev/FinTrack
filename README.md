@@ -1,48 +1,48 @@
- FinTrack Dashboard
+# FinTrack Dashboard
 
-O FinTrack Dashboard é uma aplicação web desenvolvida para auxiliar no controle de finanças pessoais por meio de uma interface moderna, intuitiva e responsiva.
+Aplicação web para controle financeiro pessoal, com painel de saldo, receitas, despesas, transações e gráficos.
 
-O projeto foi criado com o objetivo de praticar conceitos fundamentais de desenvolvimento Front-end, aplicando HTML, CSS e JavaScript em um sistema completo de gerenciamento financeiro.
+## Tecnologias
 
-Funcionalidades
-Dashboard com resumo financeiro
-Cadastro de receitas e despesas
-Cálculo automático do saldo
-Histórico de transações
-Exclusão e edição de registros
-Gráficos para visualização dos dados
-Armazenamento local utilizando LocalStorage
-Interface responsiva para desktop, tablet e smartphone
-Tema claro e escuro (Dark Mode)
+- HTML, CSS e JavaScript puro
+- Chart.js e Lucide carregados por CDN
+- Node.js, Express, PostgreSQL e CORS no backend
 
-Tecnologias utilizadas:
-HTML5
-CSS3
-JavaScript (ES6+)
-Chart.js
-LocalStorage
-Git e GitHub
+## Funcionalidades atuais
 
-### Implementado
+- Cadastro, edição, exclusão, pesquisa e filtros de transações.
+- Cálculo de saldo, receitas e despesas.
+- Gráficos de linha, pizza e barras.
+- API REST com validação dos campos de descrição, valor, tipo, categoria e data.
 
-- [x] Dashboard com cálculo automático de saldo, receitas e despesas.
-- [x] Cadastro e listagem de transações com descrição, valor, tipo, categoria e data.
-- [x] Validação de descrição e valor no formulário de cadastro.
-- [x] Pesquisa por descrição e filtros por tipo e mês.
-- [x] Gráficos com Chart.js: fluxo financeiro por data, distribuição por categoria e comparação entre receitas e despesas.
-- [x] Leitura e gravação de transações no LocalStorage.
-- [x] Backend com Node.js, Express e configuração de CORS para desenvolvimento local.
-- [x] Rotas da API própria para listar, consultar por ID e cadastrar transações, com armazenamento em memória.
-- [x] Integração do front-end com a API própria para listagem e cadastro usando Fetch API e async/await.
-- [x] Edição e exclusão no front-end com requisições simuladas pelo JSONPlaceholder e atualização do LocalStorage.
-- [x] Verificação de respostas HTTP e mensagem de erro ao carregar transações.
+### Rotas da API
 
-### Próximos passos
+| Método | Rota | Descrição |
+| --- | --- | --- |
+| `GET` | `/transacoes` | Lista as transações. |
+| `GET` | `/transacoes/:id` | Busca uma transação pelo identificador. |
+| `POST` | `/transacoes` | Cria uma transação. |
+| `PUT` | `/transacoes/:id` | Atualiza uma transação. |
+| `DELETE` | `/transacoes/:id` | Exclui uma transação. |
 
-- [ ] Concluir e corrigir a rota de atualização de transações na API própria.
-- [ ] Implementar a rota de exclusão de transações.
-- [ ] Integrar edição e exclusão do front-end à API própria, substituindo o JSONPlaceholder.
-- [ ] Implementar persistência com PostgreSQL para manter os dados após reiniciar o servidor.
-- [ ] Definir a sincronização entre LocalStorage e API para evitar divergências nos dados.
-- [ ] Validar os dados no backend e melhorar o tratamento de erros de cadastro, edição e exclusão na interface.
-- [ ] Adicionar autenticação e vincular as transações a cada usuário.
+## Como executar
+
+Em um terminal, instale as dependências do backend e inicie a API:
+
+```bash
+cd backend
+npm install
+node server.js
+```
+
+A API fica disponível em `http://localhost:3000`. Abra o `index.html` por um servidor local na porta `5500` (por exemplo, Live Server), pois essa é a origem permitida pela configuração de CORS.
+
+## Persistência de dados
+
+O PostgreSQL é a fonte única de dados. Ao iniciar, a API cria a tabela `transacoes` caso ela ainda não exista. O front-end não utiliza LocalStorage para transações.
+
+Crie `backend/.env` a partir de `backend/.env.example` e informe as credenciais locais do PostgreSQL. Esse arquivo contém dados sensíveis e não deve ser enviado ao Git.
+
+## Próximos passos
+
+- Adicionar autenticação e associar transações a usuários.
