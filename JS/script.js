@@ -12,6 +12,9 @@ const filtroMes = document.querySelector("#filtro-mes");
 const limparMes = document.querySelector("#limpar-mes");
 
 const modal = document.querySelector("#modal");
+const modalContent = document.querySelector(".modal-content");
+const feedbackModal = document.querySelector("#modal-feedback");
+const toastSucesso = document.querySelector("#toast-sucesso");
 const abrirModal = document.querySelector("#adicionar");
 const fecharModal = document.querySelector("#fechar-modal");
 const botaoSalvar = document.querySelector("#salvar");
@@ -19,6 +22,7 @@ const botaoSalvar = document.querySelector("#salvar");
 const pesquisa = document.querySelector("#pesquisa");
 
 let indiceEdicao = null;
+let temporizadorToast;
 
 
 
@@ -29,6 +33,31 @@ const graficoLinha = document.querySelector("#graficoLinha");
 const graficoPizza = document.querySelector("#graficoPizza");
 
 const graficoBarra = document.querySelector("#graficoBarra");
+
+function mostrarErroNoModal(mensagem) {
+    feedbackModal.textContent = mensagem;
+    modal.classList.add("active");
+    modalContent.classList.remove("modal-error");
+    void modalContent.offsetWidth;
+    modalContent.classList.add("modal-error");
+}
+
+function limparErroDoModal() {
+    feedbackModal.textContent = "";
+    modalContent.classList.remove("modal-error");
+}
+
+function mostrarSucesso(mensagem) {
+    clearTimeout(temporizadorToast);
+    toastSucesso.textContent = mensagem;
+    toastSucesso.classList.remove("ativo");
+    void toastSucesso.offsetWidth;
+    toastSucesso.classList.add("ativo");
+
+    temporizadorToast = setTimeout(() => {
+        toastSucesso.classList.remove("ativo");
+    }, 3000);
+}
 
 
 function atualizarCards() {
@@ -125,7 +154,7 @@ async function removerTransacao(index) {
         await excluirTransacaoDaApi(transacaoSelecionada.id);
     } catch (erro) {
         console.error("Erro ao excluir transação:", erro);
-        alert(erro.message);
+        mostrarErroNoModal(erro.message);
         return;
     }
 
@@ -136,6 +165,7 @@ async function removerTransacao(index) {
     atualizarGraficos();
 
     window.scrollTo(0, posicaoScroll);
+    mostrarSucesso("Transação excluída com sucesso.");
 }
 
 function editarTransacao(index) {
@@ -151,6 +181,8 @@ function editarTransacao(index) {
 
     indiceEdicao = index;
 
+    limparErroDoModal();
+
     modal.classList.add("active");
 
     
@@ -158,6 +190,7 @@ function editarTransacao(index) {
 
 abrirModal.addEventListener("click", function () {
 
+    limparErroDoModal();
 
     modal.classList.add("active");
 
@@ -165,6 +198,7 @@ abrirModal.addEventListener("click", function () {
 
 fecharModal.addEventListener("click", function () {
 
+    limparErroDoModal();
     modal.classList.remove("active");
 
 
@@ -189,7 +223,7 @@ botaoSalvar.addEventListener("click", async function () {
     if (descricao.trim() === "") {
 
 
-        alert("Digite uma descrição.");
+        mostrarErroNoModal("Digite uma descrição.");
 
         return;
 
@@ -201,14 +235,14 @@ botaoSalvar.addEventListener("click", async function () {
     if (valor <= 0 || isNaN(valor)) {
 
 
-        alert("Digite um valor maior que zero.");
+        mostrarErroNoModal("Digite um valor maior que zero.");
 
         return;
 
 
     }
     if (data === "") {
-    alert("Selecione uma data.");
+    mostrarErroNoModal("Selecione uma data.");
     return;
 }
     const novaTransacao = {
@@ -220,6 +254,8 @@ botaoSalvar.addEventListener("click", async function () {
     data
 }
     
+    const estaEditando = indiceEdicao !== null;
+
     try {
         if (indiceEdicao === null) {
             const resultadoApi = await enviarTransacao(novaTransacao);
@@ -236,7 +272,7 @@ botaoSalvar.addEventListener("click", async function () {
         }
     } catch (erro) {
         console.error("Erro ao salvar transação:", erro);
-        alert(erro.message);
+        mostrarErroNoModal(erro.message);
         return;
     }
 requestAnimationFrame(() => {
@@ -260,6 +296,17 @@ requestAnimationFrame(() => {
     
     document.querySelector("#data").value = "";
 
+    mostrarSucesso(
+        estaEditando
+            ? "Transação atualizada com sucesso."
+            : "Transação cadastrada com sucesso."
+    );
+
+});
+
+modal.querySelectorAll("input, select").forEach(campo => {
+    campo.addEventListener("input", limparErroDoModal);
+    campo.addEventListener("change", limparErroDoModal);
 });
 
     function aplicarFiltro() {

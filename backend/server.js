@@ -52,7 +52,14 @@ function obterIdValido(valor) {
     return Number.isInteger(id) && id > 0 ? id : null;
 }
 
-const camposRetorno = "id, descricao, valor::float8 AS valor, tipo, categoria, data";
+const camposRetorno = `
+    id,
+    descricao,
+    valor::float8 AS valor,
+    tipo,
+    categoria,
+    TO_CHAR(data, 'YYYY-MM-DD') AS data
+`;
 
 async function inicializarBanco() {
     await pool.query(`

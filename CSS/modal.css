@@ -46,6 +46,94 @@
 
 }
 
+.modal-feedback {
+    display: none;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.modal-content.modal-error {
+    animation: tremer-modal .45s ease-in-out,
+    brilho-erro 1.6s ease-out forwards;
+}
+
+.modal-content.modal-error .modal-feedback {
+    display: block;
+    background: #f84141;
+    border-radius: 8px;
+    align-self: center;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+@keyframes brilho-erro {
+    0% {
+        box-shadow: 0 0 0 0 rgba(162, 18, 18, 0.968);
+    }
+
+    25% {
+        box-shadow: 0 0 50px 1px #f84141;}
+
+    100% {
+        box-shadow: var(--shadow);
+    }
+}
+@keyframes tremer-modal {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-content.modal-error {
+        animation: none;
+    }
+}
+
+.toast-sucesso {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 1100;
+    max-width: calc(100% - 32px);
+    padding: 12px 18px;
+    border: 1px solid #45d37a;
+    border-radius: 12px;
+    background: #123d27;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 20px);
+}
+
+.toast-sucesso.ativo {
+    animation: exibir-toast .3s ease-out forwards, esconder-toast .35s ease-in 2.65s forwards;
+}
+
+@keyframes exibir-toast {
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes esconder-toast {
+    to {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .toast-sucesso.ativo {
+        animation: none;
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
 
 .modal-header{
 
