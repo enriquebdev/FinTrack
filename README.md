@@ -23,7 +23,8 @@ Aplicação web para organização de finanças pessoais. O FinTrack permite reg
 
 ## Estrutura do projeto
 
-```text
+
+
 FinTrack/
 ├── CSS/                 # Estilos da interface
 ├── JS/script.js         # Lógica do dashboard e consumo da API
@@ -33,6 +34,12 @@ FinTrack/
 │   └── package.json     # Dependências do backend
 └── index.html           # Interface principal
 ```
+- Cadastro, edição, exclusão, pesquisa e filtros de transações.
+- Cálculo de saldo, receitas e despesas.
+- Gráficos de linha, pizza e barras.
+- Relatórios por período com receitas, despesas, saldo e evolução diária.
+- API REST com validação dos campos de descrição, valor, tipo, categoria e data.
+
 
 ## Pré-requisitos
 

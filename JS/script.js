@@ -33,6 +33,11 @@ const graficoLinha = document.querySelector("#graficoLinha");
 const graficoPizza = document.querySelector("#graficoPizza");
 
 const graficoBarra = document.querySelector("#graficoBarra");
+const filtroRelatorioMes = document.querySelector("#filtro-relatorio-mes");
+const relatorioReceitas = document.querySelector("#relatorio-receitas");
+const relatorioDespesas = document.querySelector("#relatorio-despesas");
+const relatorioSaldo = document.querySelector("#relatorio-saldo");
+const graficoRelatorio = document.querySelector("#graficoRelatorio");
 
 function mostrarErroNoModal(mensagem) {
     feedbackModal.textContent = mensagem;
@@ -163,6 +168,7 @@ async function removerTransacao(index) {
     atualizarCards();
     aplicarFiltro();
     atualizarGraficos();
+    atualizarRelatorios();
 
     window.scrollTo(0, posicaoScroll);
     mostrarSucesso("Transação excluída com sucesso.");
@@ -279,6 +285,7 @@ requestAnimationFrame(() => {
         window.scrollTo(0, posicaoScroll);
     });
     atualizarGraficos();
+    atualizarRelatorios();
 
     atualizarCards();
 
@@ -348,6 +355,8 @@ filtroMes.addEventListener("change", aplicarFiltro);
     let chartPizza;
 
     let chartBarra;
+
+    let chartRelatorio;
 
     function atualizarGraficos() {
 
@@ -628,6 +637,84 @@ filtroMes.addEventListener("change", aplicarFiltro);
 
 } 
 
+function atualizarRelatorios() {
+    const mesSelecionado = filtroRelatorioMes.value;
+    const transacoesDoPeriodo = transacoes.filter(transacao =>
+        mesSelecionado === "" || transacao.data.slice(0, 7) === mesSelecionado
+    );
+
+    const receitas = transacoesDoPeriodo
+        .filter(transacao => transacao.tipo === "Receita")
+        .reduce((total, transacao) => total + Number(transacao.valor), 0);
+
+    const despesas = transacoesDoPeriodo
+        .filter(transacao => transacao.tipo === "Despesa")
+        .reduce((total, transacao) => total + Number(transacao.valor), 0);
+
+    const formatarMoeda = valor => valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+
+    relatorioReceitas.textContent = formatarMoeda(receitas);
+    relatorioDespesas.textContent = formatarMoeda(despesas);
+    relatorioSaldo.textContent = formatarMoeda(receitas - despesas);
+
+    const dadosPorData = [...new Set(transacoesDoPeriodo.map(transacao => transacao.data))]
+        .sort()
+        .map(data => ({
+            data,
+            receitas: transacoesDoPeriodo
+                .filter(transacao => transacao.data === data && transacao.tipo === "Receita")
+                .reduce((total, transacao) => total + Number(transacao.valor), 0),
+            despesas: transacoesDoPeriodo
+                .filter(transacao => transacao.data === data && transacao.tipo === "Despesa")
+                .reduce((total, transacao) => total + Number(transacao.valor), 0)
+        }));
+
+    if (chartRelatorio) {
+        chartRelatorio.destroy();
+    }
+
+    chartRelatorio = new Chart(graficoRelatorio, {
+        type: "bar",
+        data: {
+            labels: dadosPorData.map(item => item.data.split("-").reverse().join("/")),
+            datasets: [
+                {
+                    label: "Receitas",
+                    data: dadosPorData.map(item => item.receitas),
+                    backgroundColor: "#45b46a"
+                },
+                {
+                    label: "Despesas",
+                    data: dadosPorData.map(item => item.despesas),
+                    backgroundColor: "#a02f34"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: valor => formatarMoeda(valor)
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: contexto => `${contexto.dataset.label}: ${formatarMoeda(contexto.raw)}`
+                    }
+                }
+            }
+        }
+    });
+}
+
 
 // Funções para interagir com a API
 
@@ -645,6 +732,7 @@ async function carregarTransacoesDaApi() {
         aplicarFiltro();
         atualizarCards();
         atualizarGraficos();
+        atualizarRelatorios();
     } catch (erro) {
         console.error("Erro ao carregar transações:", erro);
         lista.textContent = "Não foi possível carregar as transações.";
@@ -712,5 +800,38 @@ async function excluirTransacaoDaApi(id) {
     return true;
 }
 
+const menuTransacoes = document.querySelector("#menu-transacoes");
+const menuCategorias = document.querySelector("#menu-categorias");
+const menuDashboard = document.querySelector("#menu-dashboard");
+const menuRelatorios = document.querySelector("#menu-relatorios");
 
+menuTransacoes.addEventListener("click", () => {
+    document.querySelectorAll(".menu a").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    menuTransacoes.classList.add("active");
+});
+menuCategorias.addEventListener("click", () => {
+    document.querySelectorAll(".menu a").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    menuCategorias.classList.add("active");
+});
+menuDashboard.addEventListener("click", () => {
+    document.querySelectorAll(".menu a").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    menuDashboard.classList.add("active");
+});
+menuRelatorios.addEventListener("click", () => {
+    document.querySelectorAll(".menu a").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    menuRelatorios.classList.add("active");
+});
+filtroRelatorioMes.addEventListener("change", atualizarRelatorios);
 carregarTransacoesDaApi();

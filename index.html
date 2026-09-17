@@ -33,30 +33,30 @@
 
         <nav class="menu">
 
-            <a href="#" class="active">
+            <a href="#" class="active" id="menu-dashboard">
                 <i data-lucide="layout-dashboard"></i>
                 <span>Dashboard</span>
             </a>
 
-            <a href="#">
-                <i data-lucide="wallet"></i>
-                <span>Transações</span>
+            <a href="#transacoes" id="menu-transacoes">
+            <i data-lucide="wallet"></i>
+            <span>Transações</span>
             </a>
 
-            <a href="#">
+            <a href="#categorias" id="menu-categorias">
                 <i data-lucide="tag"></i>
                 <span>Categorias</span>
             </a>
 
-            <a href="#">
+            <a href="#relatorios" id="menu-relatorios">
                 <i data-lucide="pie-chart"></i>
                 <span>Relatórios</span>
             </a>
 
-            <a href="#">
+            <!-- <a href="#">
                 <i data-lucide="target"></i>
                 <span>Metas</span>
-            </a>
+            </a> -->
 
             <a href="#">
                 <i data-lucide="settings"></i>
@@ -209,7 +209,7 @@
             <section class="card grafico-pizza">
 
                 <div class="card-header">
-                    <h3>Categorias</h3>
+                    <h3>Distribuição Financeira</h3>
                 </div>
 
                 <canvas id="graficoPizza"></canvas>
@@ -228,9 +228,43 @@
 
             </section>
 
+            <section id="relatorios" class="card relatorios">
+
+                <div class="card-header">
+                    <h3>Relatórios</h3>
+
+                    <label class="relatorio-filtro">
+                        Período
+                        <input type="month" id="filtro-relatorio-mes">
+                    </label>
+                </div>
+
+                <div class="relatorio-resumo">
+                    <article class="relatorio-card">
+                        <span>Receitas do período</span>
+                        <strong id="relatorio-receitas">R$ 0,00</strong>
+                    </article>
+
+                    <article class="relatorio-card">
+                        <span>Despesas do período</span>
+                        <strong id="relatorio-despesas">R$ 0,00</strong>
+                    </article>
+
+                    <article class="relatorio-card">
+                        <span>Saldo do período</span>
+                        <strong id="relatorio-saldo">R$ 0,00</strong>
+                    </article>
+                </div>
+
+                <div class="relatorio-grafico">
+                    <canvas id="graficoRelatorio"></canvas>
+                </div>
+
+            </section>
+
             <!-- CATEGORIAS -->
 
-            <section class="card categorias">
+            <section id="categorias" class="card categorias">
                 <div class="card-header">
 
                     <h3>Categorias</h3>
@@ -243,7 +277,7 @@
 
             <!-- TRANSAÇÕES -->
 
-                    <section class="card transacoes">
+                    <section id="transacoes" class="card transacoes">
 
                         <div class="card-header">
 
