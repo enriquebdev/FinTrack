@@ -5,6 +5,7 @@ const categoria = document.querySelector("#categoria").value;
 const data = document.querySelector("#data").value;
 
 const lista = document.querySelector("#lista-transacoes");
+const listaCategorias = document.querySelector("#lista-categorias");
 
 const filtroTipo = document.querySelector("#filtro-tipo");
 const filtroMes = document.querySelector("#filtro-mes");
@@ -166,6 +167,7 @@ async function removerTransacao(index) {
     transacoes.splice(index, 1);
 
     atualizarCards();
+    atualizarCategorias();
     aplicarFiltro();
     atualizarGraficos();
     atualizarRelatorios();
@@ -288,6 +290,7 @@ requestAnimationFrame(() => {
     atualizarRelatorios();
 
     atualizarCards();
+    atualizarCategorias();
 
     aplicarFiltro();
 
@@ -715,6 +718,52 @@ function atualizarRelatorios() {
     });
 }
 
+function atualizarCategorias() {
+    const categorias = transacoes.reduce((resumo, transacao) => {
+        const nome = transacao.categoria;
+
+        if (!resumo[nome]) {
+            resumo[nome] = { quantidade: 0, total: 0 };
+        }
+
+        resumo[nome].quantidade += 1;
+        resumo[nome].total += Number(transacao.valor);
+
+        return resumo;
+    }, {});
+
+    const categoriasOrdenadas = Object.entries(categorias)
+        .sort(([, primeira], [, segunda]) => segunda.total - primeira.total);
+
+    listaCategorias.innerHTML = "";
+
+    if (categoriasOrdenadas.length === 0) {
+        listaCategorias.textContent = "Nenhuma categoria cadastrada.";
+        return;
+    }
+
+    categoriasOrdenadas.forEach(([nome, dados]) => {
+        const item = document.createElement("div");
+        item.className = "categoria-item";
+
+        const informacoes = document.createElement("div");
+        const titulo = document.createElement("strong");
+        const detalhe = document.createElement("span");
+        const total = document.createElement("span");
+
+        titulo.textContent = nome;
+        detalhe.textContent = `${dados.quantidade} ${dados.quantidade === 1 ? "lançamento" : "lançamentos"}`;
+        total.textContent = dados.total.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+
+        informacoes.append(titulo, detalhe);
+        item.append(informacoes, total);
+        listaCategorias.append(item);
+    });
+}
+
 
 // Funções para interagir com a API
 
@@ -731,6 +780,7 @@ async function carregarTransacoesDaApi() {
         transacoes = dados;
         aplicarFiltro();
         atualizarCards();
+        atualizarCategorias();
         atualizarGraficos();
         atualizarRelatorios();
     } catch (erro) {
