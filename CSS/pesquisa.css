@@ -353,7 +353,24 @@
 }
 
 .relatorio-card strong {
+    display: block;
     font-size: 22px;
+}
+
+.comparacao-relatorio {
+    display: block;
+    min-height: 17px;
+    margin-top: 10px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.comparacao-relatorio.positiva {
+    color: var(--primary);
+}
+
+.comparacao-relatorio.negativa {
+    color: var(--danger);
 }
 
 .relatorio-grafico {

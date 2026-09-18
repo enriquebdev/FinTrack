@@ -38,6 +38,9 @@ const filtroRelatorioMes = document.querySelector("#filtro-relatorio-mes");
 const relatorioReceitas = document.querySelector("#relatorio-receitas");
 const relatorioDespesas = document.querySelector("#relatorio-despesas");
 const relatorioSaldo = document.querySelector("#relatorio-saldo");
+const comparacaoReceitas = document.querySelector("#comparacao-receitas");
+const comparacaoDespesas = document.querySelector("#comparacao-despesas");
+const comparacaoSaldo = document.querySelector("#comparacao-saldo");
 const graficoRelatorio = document.querySelector("#graficoRelatorio");
 
 function mostrarErroNoModal(mensagem) {
@@ -640,12 +643,7 @@ filtroMes.addEventListener("change", aplicarFiltro);
 
 } 
 
-function atualizarRelatorios() {
-    const mesSelecionado = filtroRelatorioMes.value;
-    const transacoesDoPeriodo = transacoes.filter(transacao =>
-        mesSelecionado === "" || transacao.data.slice(0, 7) === mesSelecionado
-    );
-
+function calcularResumo(transacoesDoPeriodo) {
     const receitas = transacoesDoPeriodo
         .filter(transacao => transacao.tipo === "Receita")
         .reduce((total, transacao) => total + Number(transacao.valor), 0);
@@ -654,14 +652,74 @@ function atualizarRelatorios() {
         .filter(transacao => transacao.tipo === "Despesa")
         .reduce((total, transacao) => total + Number(transacao.valor), 0);
 
+    return {
+        receitas,
+        despesas,
+        saldo: receitas - despesas
+    };
+}
+
+function obterMesAnterior(mesSelecionado) {
+    if (!mesSelecionado) return null;
+
+    const [ano, mes] = mesSelecionado.split("-").map(Number);
+    const data = new Date(Date.UTC(ano, mes - 2, 1));
+
+    return `${data.getUTCFullYear()}-${String(data.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+function atualizarComparacao(elemento, valorAtual, valorAnterior, mesAnterior, melhoraComAumento) {
+    elemento.className = "comparacao-relatorio";
+
+    if (!mesAnterior || valorAnterior === 0) {
+        elemento.textContent = mesAnterior ? "Sem comparação disponível" : "";
+        return;
+    }
+
+    const variacao = ((valorAtual - valorAnterior) / Math.abs(valorAnterior)) * 100;
+
+    if (variacao === 0) {
+        const mesFormatado = new Date(`${mesAnterior}-01T00:00:00Z`)
+            .toLocaleDateString("pt-BR", { month: "long", year: "numeric", timeZone: "UTC" });
+
+        elemento.textContent = `Sem variação em relação a ${mesFormatado}`;
+        return;
+    }
+
+    const variacaoPositiva = variacao >= 0;
+    const resultadoPositivo = melhoraComAumento ? variacaoPositiva : !variacaoPositiva;
+    const seta = variacaoPositiva ? "↑" : "↓";
+    const mesFormatado = new Date(`${mesAnterior}-01T00:00:00Z`)
+        .toLocaleDateString("pt-BR", { month: "long", year: "numeric", timeZone: "UTC" });
+
+    elemento.textContent = `${seta} ${Math.abs(variacao).toFixed(1)}% em relação a ${mesFormatado}`;
+    elemento.classList.add(resultadoPositivo ? "positiva" : "negativa");
+}
+
+function atualizarRelatorios() {
+    const mesSelecionado = filtroRelatorioMes.value;
+    const transacoesDoPeriodo = transacoes.filter(transacao =>
+        mesSelecionado === "" || transacao.data.slice(0, 7) === mesSelecionado
+    );
+    const mesAnterior = obterMesAnterior(mesSelecionado);
+    const transacoesMesAnterior = transacoes.filter(transacao =>
+        transacao.data.slice(0, 7) === mesAnterior
+    );
+    const resumoAtual = calcularResumo(transacoesDoPeriodo);
+    const resumoAnterior = calcularResumo(transacoesMesAnterior);
+
     const formatarMoeda = valor => valor.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL"
     });
 
-    relatorioReceitas.textContent = formatarMoeda(receitas);
-    relatorioDespesas.textContent = formatarMoeda(despesas);
-    relatorioSaldo.textContent = formatarMoeda(receitas - despesas);
+    relatorioReceitas.textContent = formatarMoeda(resumoAtual.receitas);
+    relatorioDespesas.textContent = formatarMoeda(resumoAtual.despesas);
+    relatorioSaldo.textContent = formatarMoeda(resumoAtual.saldo);
+
+    atualizarComparacao(comparacaoReceitas, resumoAtual.receitas, resumoAnterior.receitas, mesAnterior, true);
+    atualizarComparacao(comparacaoDespesas, resumoAtual.despesas, resumoAnterior.despesas, mesAnterior, false);
+    atualizarComparacao(comparacaoSaldo, resumoAtual.saldo, resumoAnterior.saldo, mesAnterior, true);
 
     const dadosPorData = [...new Set(transacoesDoPeriodo.map(transacao => transacao.data))]
         .sort()

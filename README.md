@@ -8,7 +8,7 @@ Aplicação web para organização de finanças pessoais. O FinTrack permite reg
 - Pesquisa por descrição e filtros por tipo e mês.
 - Cálculo automático de saldo, receitas e despesas.
 - Gráficos de fluxo financeiro, distribuição financeira e comparação entre receitas e despesas.
-- Relatório por período com cards de resumo e evolução diária.
+- Relatório por período com cards de resumo, comparação mensal e evolução diária.
 - Resumo de categorias com quantidade de lançamentos e valor total movimentado.
 - Navegação na sidebar para Dashboard, Transações, Categorias e Relatórios.
 - Feedback visual de erro no modal e notificações de sucesso no rodapé.
