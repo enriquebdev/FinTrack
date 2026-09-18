@@ -23,8 +23,6 @@ Aplicação web para organização de finanças pessoais. O FinTrack permite reg
 
 ## Estrutura do projeto
 
-
-
 FinTrack/
 ├── CSS/                 # Estilos da interface
 ├── JS/script.js         # Lógica do dashboard e consumo da API
@@ -34,6 +32,7 @@ FinTrack/
 │   └── package.json     # Dependências do backend
 └── index.html           # Interface principal
 ```
+
 - Cadastro, edição, exclusão, pesquisa e filtros de transações.
 - Cálculo de saldo, receitas e despesas.
 - Gráficos de linha, pizza e barras.
@@ -50,6 +49,18 @@ FinTrack/
 
 ## Configuração
 
+=======
+
+## Pré-requisitos
+
+- Node.js instalado.
+- PostgreSQL instalado e em execução.
+- Banco de dados `Fintrack` criado.
+- Uma extensão de servidor local, como Live Server no VS Code.
+
+## Configuração
+
+>>>>>>> a86027a (docs: atualizar documentação do FinTrack)
 Na pasta `backend`, crie um arquivo `.env` baseado em `.env.example`:
 
 ```env
