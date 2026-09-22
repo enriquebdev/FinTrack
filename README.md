@@ -8,7 +8,7 @@ Aplicação web para organização de finanças pessoais. O FinTrack permite reg
 - Pesquisa por descrição e filtros por tipo e mês.
 - Cálculo automático de saldo, receitas e despesas.
 - Gráficos de fluxo financeiro, distribuição financeira e comparação entre receitas e despesas.
-- Relatório por período com cards de resumo, comparação mensal e evolução diária.
+- Relatórios por período com resumo, comparação mensal e evolução diária.
 - Resumo de categorias com quantidade de lançamentos e valor total movimentado.
 - Navegação na sidebar para Dashboard, Transações, Categorias e Relatórios.
 - Feedback visual de erro no modal e notificações de sucesso no rodapé.
@@ -17,13 +17,13 @@ Aplicação web para organização de finanças pessoais. O FinTrack permite reg
 ## Tecnologias
 
 - HTML, CSS e JavaScript puro.
-- [Chart.js](https://www.chartjs.org/) para gráficos.
-- [Lucide](https://lucide.dev/) para ícones.
+- Chart.js para gráficos e Lucide para ícones.
 - Node.js, Express e CORS no backend.
-- PostgreSQL e `pg` para o banco de dados.
+- PostgreSQL e `pg` para persistência de dados.
 
 ## Estrutura do projeto
 
+```text
 FinTrack/
 ├── CSS/                 # Estilos da interface
 ├── JS/script.js         # Lógica do dashboard e consumo da API
@@ -34,34 +34,15 @@ FinTrack/
 └── index.html           # Interface principal
 ```
 
-- Cadastro, edição, exclusão, pesquisa e filtros de transações.
-- Cálculo de saldo, receitas e despesas.
-- Gráficos de linha, pizza e barras.
-- Relatórios por período com receitas, despesas, saldo e evolução diária.
-- API REST com validação dos campos de descrição, valor, tipo, categoria e data.
-
-
 ## Pré-requisitos
 
 - Node.js instalado.
 - PostgreSQL instalado e em execução.
 - Banco de dados `Fintrack` criado.
-- Uma extensão de servidor local, como Live Server no VS Code.
+- Um servidor local para o front-end, como Live Server no VS Code.
 
 ## Configuração
 
-=======
-
-## Pré-requisitos
-
-- Node.js instalado.
-- PostgreSQL instalado e em execução.
-- Banco de dados `Fintrack` criado.
-- Uma extensão de servidor local, como Live Server no VS Code.
-
-## Configuração
-
->>>>>>> a86027a (docs: atualizar documentação do FinTrack)
 Na pasta `backend`, crie um arquivo `.env` baseado em `.env.example`:
 
 ```env
@@ -90,13 +71,9 @@ npm install
    node server.js
    ```
 
-2. Abra `index.html` com Live Server na porta `5500`.
+2. Abra `index.html` em um servidor local na porta `5500`.
 
-A interface é servida em `http://localhost:5500` e a API em `http://localhost:3000`.
-
-## Banco de dados
-
-Ao iniciar, a API cria a tabela `transacoes` caso ela ainda não exista. O PostgreSQL é a fonte única de dados; o LocalStorage não é utilizado para salvar transações.
+A interface é acessada em `http://localhost:5500` e a API em `http://localhost:3000`.
 
 ## Rotas da API
 
@@ -108,23 +85,10 @@ Ao iniciar, a API cria a tabela `transacoes` caso ela ainda não exista. O Postg
 | `PUT` | `/transacoes/:id` | Atualiza uma transação. |
 | `DELETE` | `/transacoes/:id` | Exclui uma transação. |
 
-Exemplo de corpo para criação ou edição:
-
-```json
-{
-  "descricao": "Supermercado",
-  "valor": 150.5,
-  "tipo": "Despesa",
-  "categoria": "Alimentação",
-  "data": "2026-09-17"
-}
-```
-
 ## Próximos passos
 
 - Criar autenticação e associar transações a cada usuário.
 - Permitir criar e editar categorias personalizadas.
-- Adicionar comparação com o mês anterior nos relatórios.
 - Exportar relatórios em CSV ou PDF.
 - Criar testes automatizados para a API e a interface.
 - Preparar a publicação do frontend, backend e banco de dados.
