@@ -10,17 +10,19 @@
     --sidebar: #111720;
     --card: #161E2D;
     --border: #273348;
-
+    --results:#b7bac0d0;
     --primary: #16C784;
 
     --text: #FFFFFF;
     --text-secondary: #8A99B8;
+
+   
 }
 
 /*BODY*/
 
 body{
-    background: var(--background);
+    background: var(--results);
     color: var(--text);
 }
 
@@ -42,6 +44,9 @@ body{
     background: var(--sidebar);
     border-right: 1px solid var(--border);
 }
+
+
+
 
 /*LOGO*/
 
@@ -194,6 +199,8 @@ header{
 }
 
 .grafico-pizza{
+    background: var(--card);
+    border: 1px solid var(--border);
     grid-column: span 4;
 }
 

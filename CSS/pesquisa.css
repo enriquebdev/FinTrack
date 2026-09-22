@@ -481,9 +481,19 @@ body.modo-claro .relatorio-filtro input {
     padding: 10px;
     border: none;
 }
-#btn-editar{
-    color: #ffffff;
+
+.btn-edit{
+        width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    background: var(--border);
+    color: var(--text);
     cursor: pointer;
+    transition: .25s;
 }
 #btn-excluir{
     width: 20px;

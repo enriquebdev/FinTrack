@@ -83,9 +83,9 @@
 
     padding:18px;
 
-    border-radius:14px;
-
-    background:var(--results);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
 
     transition:.25s;
 
@@ -154,7 +154,7 @@
 
     border-radius:10px;
 
-    background:#273348;
+    background:var(--border);
 
     color:#FF5A5A;
 
