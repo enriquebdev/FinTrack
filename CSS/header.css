@@ -23,8 +23,26 @@
 
     --text:#FFFFFF;
     --text-secondary:#8A99B8;
+    --hover:#1C2535;
 
     --shadow:0 10px 30px rgba(0,0,0,.25);
+
+}
+
+body.modo-claro {
+
+    --background:#F4F7FB;
+    --sidebar:#FFFFFF;
+    --card:#FFFFFF;
+    --border:#D9E1EC;
+    --primary:#0FA968;
+    --primary-hover:#0B8A55;
+    --text:#1F2937;
+    --text-secondary:#64748B;
+    --hover:#EAF0F6;
+    --shadow:0 10px 30px rgba(31,41,55,.08);
+
+    color-scheme:light;
 
 }
 
@@ -127,9 +145,9 @@ body{
 
 .menu a:hover{
 
-    background:#1C2535;
+    background:var(--hover);
 
-    color:white;
+    color:var(--text);
 
 }
 
@@ -184,9 +202,9 @@ body{
 
 .bottom a:hover{
 
-    background:#1C2535;
+    background:var(--hover);
 
-    color:white;
+    color:var(--text);
 
 }
 
@@ -242,5 +260,33 @@ header h2{
     align-items:center;
 
     gap:18px;
+
+}
+
+.btn-tema {
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    width:46px;
+    height:46px;
+
+    border:1px solid var(--border);
+    border-radius:14px;
+
+    background:var(--card);
+    color:var(--text-secondary);
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.btn-tema:hover {
+
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#FFFFFF;
 
 }

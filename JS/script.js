@@ -43,6 +43,41 @@ const comparacaoReceitas = document.querySelector("#comparacao-receitas");
 const comparacaoDespesas = document.querySelector("#comparacao-despesas");
 const comparacaoSaldo = document.querySelector("#comparacao-saldo");
 const graficoRelatorio = document.querySelector("#graficoRelatorio");
+const botaoTema = document.querySelector("#alternar-tema");
+
+function atualizarTema() {
+    const modoClaroAtivo = document.body.classList.contains("modo-claro");
+
+    botaoTema.setAttribute(
+        "aria-label",
+        modoClaroAtivo ? "Ativar modo escuro" : "Ativar modo claro"
+    );
+
+    botaoTema.setAttribute(
+        "title",
+        modoClaroAtivo ? "Modo escuro" : "Modo claro"
+    );
+
+    botaoTema.innerHTML = `<i data-lucide="${modoClaroAtivo ? "moon" : "sun"}"></i>`;
+    lucide.createIcons();
+}
+
+if (localStorage.getItem("tema") === "claro") {
+    document.body.classList.add("modo-claro");
+}
+
+atualizarTema();
+
+botaoTema.addEventListener("click", () => {
+    document.body.classList.toggle("modo-claro");
+
+    const temaAtual = document.body.classList.contains("modo-claro")
+        ? "claro"
+        : "escuro";
+
+    localStorage.setItem("tema", temaAtual);
+    atualizarTema();
+});
 
 function mostrarErroNoModal(mensagem) {
     feedbackModal.textContent = mensagem;
