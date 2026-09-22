@@ -1,6 +1,14 @@
 # FinTrack Dashboard
 
-Aplicação web para organização de finanças pessoais. O FinTrack permite registrar receitas e despesas, acompanhar o saldo, visualizar gráficos e consultar relatórios por período.
+O FinTrack foi criado para substituir o uso de planilhas do Google no controle financeiro pessoal e familiar.
+
+Embora planilhas sejam úteis, elas exigem preenchimento manual, podem ficar desorganizadas com o tempo e dificultam a visualização rápida de informações importantes, como saldo disponível, total de receitas, despesas por categoria e comparação entre meses.
+
+O FinTrack centraliza esse controle em uma interface mais simples e visual. A aplicação permite cadastrar, editar e excluir transações, pesquisar lançamentos, filtrar por mês ou tipo, acompanhar gráficos financeiros e gerar relatórios em PDF.
+
+Os dados são armazenados em um banco PostgreSQL por meio de uma API construída com Node.js e Express, trazendo mais organização e persistência para o controle financeiro.
+
+Com isso, o usuário pode acompanhar sua vida financeira sem depender de fórmulas, abas ou configurações manuais de planilhas.
 
 ## Funcionalidades
 
