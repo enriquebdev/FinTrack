@@ -112,6 +112,11 @@
     animation: exibir-toast .3s ease-out forwards, esconder-toast .35s ease-in 2.65s forwards;
 }
 
+.toast-sucesso.erro {
+    background: #a52222;
+    border-color: #f28b8b;
+}
+
 @keyframes exibir-toast {
     to {
         opacity: 1;

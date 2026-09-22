@@ -57,9 +57,10 @@ function limparErroDoModal() {
     modalContent.classList.remove("modal-error");
 }
 
-function mostrarSucesso(mensagem) {
+function mostrarNotificacao(mensagem, tipo = "sucesso") {
     clearTimeout(temporizadorToast);
     toastSucesso.textContent = mensagem;
+    toastSucesso.classList.toggle("erro", tipo === "erro");
     toastSucesso.classList.remove("ativo");
     void toastSucesso.offsetWidth;
     toastSucesso.classList.add("ativo");
@@ -67,6 +68,10 @@ function mostrarSucesso(mensagem) {
     temporizadorToast = setTimeout(() => {
         toastSucesso.classList.remove("ativo");
     }, 3000);
+}
+
+function mostrarSucesso(mensagem) {
+    mostrarNotificacao(mensagem);
 }
 
 
@@ -786,42 +791,60 @@ function exportarRelatorioPdf() {
         mesSelecionado === "" || transacao.data.slice(0, 7) === mesSelecionado
     );
 
-    if (transacoesDoPeriodo.length === 0) return;
+    if (transacoesDoPeriodo.length === 0) {
+        mostrarNotificacao("Não há transações para exportar neste período.", "erro");
+        return;
+    }
 
-    const { jsPDF } = window.jspdf;
-    const documento = new jsPDF();
+    const jsPDF = window.jspdf?.jsPDF;
 
-    const periodo = mesSelecionado || "Todos os períodos";
+    if (typeof jsPDF !== "function") {
+        mostrarNotificacao("Não foi possível carregar o gerador de PDF. Recarregue a página.", "erro");
+        return;
+    }
 
-    documento.setFontSize(18);
-    documento.text("FinTrack - Relatório Financeiro", 14, 18);
+    try {
+        const documento = new jsPDF();
 
-    documento.setFontSize(11);
-    documento.text(`Período: ${periodo}`, 14, 27);
-
-    documento.autoTable({
-        startY: 34,
-        head: [["Data", "Descrição", "Tipo", "Categoria", "Valor"]],
-        body: transacoesDoPeriodo.map(transacao => [
-            transacao.data.split("-").reverse().join("/"),
-            transacao.descricao,
-            transacao.tipo,
-            transacao.categoria,
-            Number(transacao.valor).toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL"
-            })
-        ]),
-        headStyles: {
-            fillColor: [22, 199, 132]
+        if (typeof documento.autoTable !== "function") {
+            mostrarNotificacao("Não foi possível carregar a tabela do PDF. Recarregue a página.", "erro");
+            return;
         }
-    });
 
-    documento.save(`fintrack-relatorio-${mesSelecionado || "todos-os-periodos"}.pdf`);
+        const periodo = mesSelecionado || "Todos os períodos";
 
-    mostrarSucesso("Relatório em PDF exportado com sucesso.");
+        documento.setFontSize(18);
+        documento.text("FinTrack - Relatório Financeiro", 14, 18);
+
+        documento.setFontSize(11);
+        documento.text(`Período: ${periodo}`, 14, 27);
+
+        documento.autoTable({
+            startY: 34,
+            head: [["Data", "Descrição", "Tipo", "Categoria", "Valor"]],
+            body: transacoesDoPeriodo.map(transacao => [
+                transacao.data.split("-").reverse().join("/"),
+                transacao.descricao,
+                transacao.tipo,
+                transacao.categoria,
+                Number(transacao.valor).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                })
+            ]),
+            headStyles: {
+                fillColor: [22, 199, 132]
+            }
+        });
+
+        documento.save(`fintrack-relatorio-${mesSelecionado || "todos-os-periodos"}.pdf`);
+
+        mostrarSucesso("Relatório em PDF exportado com sucesso.");
+    } catch (erro) {
+        console.error("Erro ao exportar relatório em PDF:", erro);
+        mostrarNotificacao("Não foi possível exportar o PDF. Tente novamente.", "erro");
+    }
 }
-
 function atualizarCategorias() {
     const categorias = transacoes.reduce((resumo, transacao) => {
         const nome = transacao.categoria;
