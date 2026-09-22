@@ -779,39 +779,47 @@ function atualizarRelatorios() {
     });
 }
 
-function escaparCampoCsv(valor) {
-    return `"${String(valor).replace(/"/g, '""')}"`;
-}
-
-function exportarRelatorioCsv() {
+function exportarRelatorioPdf() {
     const mesSelecionado = filtroRelatorioMes.value;
+
     const transacoesDoPeriodo = transacoes.filter(transacao =>
         mesSelecionado === "" || transacao.data.slice(0, 7) === mesSelecionado
     );
 
     if (transacoesDoPeriodo.length === 0) return;
 
-    const linhas = transacoesDoPeriodo.map(transacao => [
-        transacao.data,
-        transacao.descricao,
-        transacao.tipo,
-        transacao.categoria,
-        Number(transacao.valor).toFixed(2).replace(".", ",")
-    ].map(escaparCampoCsv).join(";"));
+    const { jsPDF } = window.jspdf;
+    const documento = new jsPDF();
 
-    const conteudo = ["Data;Descrição;Tipo;Categoria;Valor", ...linhas].join("\r\n");
-    const arquivo = new Blob(["\uFEFF", conteudo], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(arquivo);
-    const link = document.createElement("a");
+    const periodo = mesSelecionado || "Todos os períodos";
 
-    link.href = url;
-    link.download = `fintrack-relatorio-${mesSelecionado || "todos-os-periodos"}.csv`;
-    document.body.append(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
+    documento.setFontSize(18);
+    documento.text("FinTrack - Relatório Financeiro", 14, 18);
 
-    mostrarSucesso("Relatório exportado com sucesso.");
+    documento.setFontSize(11);
+    documento.text(`Período: ${periodo}`, 14, 27);
+
+    documento.autoTable({
+        startY: 34,
+        head: [["Data", "Descrição", "Tipo", "Categoria", "Valor"]],
+        body: transacoesDoPeriodo.map(transacao => [
+            transacao.data.split("-").reverse().join("/"),
+            transacao.descricao,
+            transacao.tipo,
+            transacao.categoria,
+            Number(transacao.valor).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            })
+        ]),
+        headStyles: {
+            fillColor: [22, 199, 132]
+        }
+    });
+
+    documento.save(`fintrack-relatorio-${mesSelecionado || "todos-os-periodos"}.pdf`);
+
+    mostrarSucesso("Relatório em PDF exportado com sucesso.");
 }
 
 function atualizarCategorias() {
@@ -980,5 +988,5 @@ menuRelatorios.addEventListener("click", () => {
     menuRelatorios.classList.add("active");
 });
 filtroRelatorioMes.addEventListener("change", atualizarRelatorios);
-botaoExportarRelatorio.addEventListener("click", exportarRelatorioCsv);
+botaoExportarRelatorio.addEventListener("click", exportarRelatorioPdf);
 carregarTransacoesDaApi();

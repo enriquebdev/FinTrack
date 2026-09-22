@@ -9,7 +9,7 @@ Aplicação web para organização de finanças pessoais. O FinTrack permite reg
 - Cálculo automático de saldo, receitas e despesas.
 - Gráficos de fluxo financeiro, distribuição financeira e comparação entre receitas e despesas.
 - Relatórios por período com resumo, comparação mensal e evolução diária.
-- Exportação de relatórios em CSV conforme o período selecionado.
+- Exportação de relatórios em PDF conforme o período selecionado.
 - Resumo de categorias com quantidade de lançamentos e valor total movimentado.
 - Navegação na sidebar para Dashboard, Transações, Categorias e Relatórios.
 - Feedback visual de erro no modal e notificações de sucesso no rodapé.
@@ -18,7 +18,7 @@ Aplicação web para organização de finanças pessoais. O FinTrack permite reg
 ## Tecnologias
 
 - HTML, CSS e JavaScript puro.
-- Chart.js para gráficos e Lucide para ícones.
+- Chart.js para gráficos, Lucide para ícones e jsPDF para documentos PDF.
 - Node.js, Express e CORS no backend.
 - PostgreSQL e `pg` para persistência de dados.
 
@@ -90,6 +90,5 @@ A interface é acessada em `http://localhost:5500` e a API em `http://localhost:
 
 - Criar autenticação e associar transações a cada usuário.
 - Permitir criar e editar categorias personalizadas.
-- Exportar relatórios em PDF.
 - Criar testes automatizados para a API e a interface.
 - Preparar a publicação do frontend, backend e banco de dados.
