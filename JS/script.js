@@ -35,6 +35,7 @@ const graficoPizza = document.querySelector("#graficoPizza");
 
 const graficoBarra = document.querySelector("#graficoBarra");
 const filtroRelatorioMes = document.querySelector("#filtro-relatorio-mes");
+const botaoExportarRelatorio = document.querySelector("#exportar-relatorio");
 const relatorioReceitas = document.querySelector("#relatorio-receitas");
 const relatorioDespesas = document.querySelector("#relatorio-despesas");
 const relatorioSaldo = document.querySelector("#relatorio-saldo");
@@ -708,6 +709,8 @@ function atualizarRelatorios() {
     const resumoAtual = calcularResumo(transacoesDoPeriodo);
     const resumoAnterior = calcularResumo(transacoesMesAnterior);
 
+    botaoExportarRelatorio.disabled = transacoesDoPeriodo.length === 0;
+
     const formatarMoeda = valor => valor.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL"
@@ -774,6 +777,41 @@ function atualizarRelatorios() {
             }
         }
     });
+}
+
+function escaparCampoCsv(valor) {
+    return `"${String(valor).replace(/"/g, '""')}"`;
+}
+
+function exportarRelatorioCsv() {
+    const mesSelecionado = filtroRelatorioMes.value;
+    const transacoesDoPeriodo = transacoes.filter(transacao =>
+        mesSelecionado === "" || transacao.data.slice(0, 7) === mesSelecionado
+    );
+
+    if (transacoesDoPeriodo.length === 0) return;
+
+    const linhas = transacoesDoPeriodo.map(transacao => [
+        transacao.data,
+        transacao.descricao,
+        transacao.tipo,
+        transacao.categoria,
+        Number(transacao.valor).toFixed(2).replace(".", ",")
+    ].map(escaparCampoCsv).join(";"));
+
+    const conteudo = ["Data;Descrição;Tipo;Categoria;Valor", ...linhas].join("\r\n");
+    const arquivo = new Blob(["\uFEFF", conteudo], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(arquivo);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `fintrack-relatorio-${mesSelecionado || "todos-os-periodos"}.csv`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+
+    mostrarSucesso("Relatório exportado com sucesso.");
 }
 
 function atualizarCategorias() {
@@ -942,4 +980,5 @@ menuRelatorios.addEventListener("click", () => {
     menuRelatorios.classList.add("active");
 });
 filtroRelatorioMes.addEventListener("change", atualizarRelatorios);
+botaoExportarRelatorio.addEventListener("click", exportarRelatorioCsv);
 carregarTransacoesDaApi();

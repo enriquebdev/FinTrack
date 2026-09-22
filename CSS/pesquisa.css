@@ -321,6 +321,12 @@
     font-size: 14px;
 }
 
+.relatorio-acoes {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .relatorio-filtro input {
     padding: 9px 12px;
     border: 1px solid var(--border);
@@ -329,6 +335,35 @@
     color: var(--text);
     color-scheme: dark;
     font: inherit;
+}
+
+.btn-exportar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    transition: .25s;
+}
+
+.btn-exportar:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-exportar:disabled {
+    cursor: not-allowed;
+    opacity: .45;
+}
+
+.btn-exportar svg {
+    width: 17px;
 }
 
 .relatorio-resumo {
@@ -383,6 +418,11 @@
     }
 
     .relatorio-filtro {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .relatorio-acoes {
         align-items: flex-start;
         flex-direction: column;
     }

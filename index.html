@@ -233,10 +233,17 @@
                 <div class="card-header">
                     <h3>Relatórios</h3>
 
-                    <label class="relatorio-filtro">
-                        Período
-                        <input type="month" id="filtro-relatorio-mes">
-                    </label>
+                    <div class="relatorio-acoes">
+                        <label class="relatorio-filtro">
+                            Período
+                            <input type="month" id="filtro-relatorio-mes">
+                        </label>
+
+                        <button type="button" id="exportar-relatorio" class="btn-exportar">
+                            <i data-lucide="download"></i>
+                            Exportar CSV
+                        </button>
+                    </div>
                 </div>
 
                 <div class="relatorio-resumo">
