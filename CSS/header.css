@@ -13,6 +13,7 @@
     --background:#0B0F14;
     --sidebar:#111720;
     --card:#161E2D;
+    --surface:#1A2233;
 
     --border:#273348;
 
@@ -34,6 +35,7 @@ body.modo-claro {
     --background:#F4F7FB;
     --sidebar:#FFFFFF;
     --card:#FFFFFF;
+    --surface:#F8FAFC;
     --border:#D9E1EC;
     --primary:#0FA968;
     --primary-hover:#0B8A55;

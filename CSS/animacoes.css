@@ -85,7 +85,7 @@
 
     border-radius:14px;
 
-    background:#1A2233;
+    background:var(--results);
 
     transition:.25s;
 
@@ -93,7 +93,7 @@
 
 .transacao:hover{
 
-    background:#212B3E;
+    background:var(--hover);
 
 }
 
@@ -247,7 +247,7 @@
     padding: 14px;
     border: 1px solid var(--border);
     border-radius: 12px;
-    background: #1A2233;
+    background: var(--surface);
 }
 
 .categoria-item strong,

@@ -460,17 +460,17 @@ body.modo-claro .relatorio-filtro input {
     width: 90px;
     font-size: 15px;
     font: bold;
-    color: aliceblue;
+    color: var(--text);
     background-color: var(--card);
-    border: var(--border);
+    border: 1px solid var(--border);
 }
 #filtro-mes{
     margin-right:10px ;
     cursor: pointer;
     padding: 10PX;
-    color: aliceblue;
+    color: var(--text);
     background-color: var(--card);
-    border: transparent;
+    border: 1px solid var(--border);
     font-family: 'Courier New', Courier, monospace;
 }
 
