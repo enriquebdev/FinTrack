@@ -268,3 +268,264 @@
     color: var(--primary);
     font-weight: 700;
 }
+
+/*==================================================
+=                 RESPONSIVIDADE                   =
+==================================================*/
+
+/* Tablet: barra lateral compacta e cards em duas colunas. */
+@media (max-width: 1100px) {
+    .sidebar {
+        width: 76px;
+        padding: 20px 12px;
+    }
+
+    .logo {
+        margin-bottom: 34px;
+        text-align: center;
+    }
+
+    .logo h1 {
+        font-size: 0;
+    }
+
+    .logo h1::after {
+        content: "FT";
+        font-size: 24px;
+    }
+
+    .menu a,
+    .bottom a {
+        justify-content: center;
+        gap: 0;
+        padding: 0;
+    }
+
+    .menu span,
+    .bottom span {
+        display: none;
+    }
+
+    .content {
+        margin-left: 76px;
+        padding: 24px;
+    }
+
+    .search {
+        width: min(320px, 34vw);
+    }
+
+    .saldo,
+    .receitas,
+    .despesas,
+    .meta {
+        grid-column: span 6;
+    }
+
+    .grafico-linha,
+    .grafico-pizza,
+    .grafico-barra,
+    .relatorios,
+    .categorias,
+    .transacoes {
+        grid-column: span 12;
+    }
+}
+
+/* Celular: conteúdo fluido, controles empilháveis e cards mais compactos. */
+@media (max-width: 760px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .content {
+        margin-left: 64px;
+        padding: 16px;
+        min-width: 0;
+    }
+
+    main.dashboard {
+        width: 100%;
+        margin-left: 0;
+        padding: 0;
+        gap: 16px;
+    }
+
+    .sidebar {
+        width: 64px;
+        padding: 16px 6px;
+    }
+
+    .logo h1::after {
+        font-size: 20px;
+    }
+
+    header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    header h2 {
+        font-size: 26px;
+    }
+
+    .header-right {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .search {
+        order: -1;
+        width: 100%;
+    }
+
+    .icon-btn,
+    .btn-tema,
+    .avatar {
+        width: 42px;
+        height: 42px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .card:hover {
+        transform: none;
+    }
+
+    .card-header,
+    .relatorio-acoes {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .select-container {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-left: 0;
+    }
+
+    #filtro-mes,
+    #filtro-tipo {
+        flex: 1;
+        min-width: 0;
+    }
+
+    #filtro-mes {
+        margin-right: 0;
+    }
+
+    .relatorio-filtro {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .relatorio-filtro input,
+    .btn-exportar {
+        width: 100%;
+    }
+
+    .relatorio-resumo {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .grafico-linha,
+    .grafico-pizza,
+    .grafico-barra,
+    .relatorio-grafico {
+        min-height: 260px;
+    }
+
+    .grafico-linha canvas,
+    .grafico-pizza canvas,
+    .grafico-barra canvas,
+    .relatorio-grafico canvas {
+        max-width: 100%;
+    }
+
+    .transacao {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .modal {
+        padding: 16px;
+    }
+
+    .modal-content {
+        width: min(420px, 100%);
+        padding: 24px;
+    }
+}
+
+/* Celulares menores: navegação inferior e uma coluna para os cards. */
+@media (max-width: 480px) {
+    .sidebar {
+        top: auto;
+        bottom: 0;
+        z-index: 900;
+        width: 100%;
+        height: 72px;
+        padding: 8px;
+        flex-direction: row;
+        border-top: 1px solid var(--border);
+        border-right: none;
+    }
+
+    .logo,
+    .bottom,
+    .menu a:nth-child(5) {
+        display: none;
+    }
+
+    .menu {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 0;
+    }
+
+    .menu a {
+        flex: 1;
+        max-width: 56px;
+        height: 52px;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 16px 16px 92px;
+    }
+
+    .saldo,
+    .receitas,
+    .despesas,
+    .meta {
+        grid-column: span 12;
+    }
+
+    .card p {
+        font-size: 28px;
+    }
+
+    .card-header h3 {
+        font-size: 18px;
+    }
+
+    .relatorio-filtro {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .btn-add,
+    .btn-exportar {
+        justify-content: center;
+    }
+}
