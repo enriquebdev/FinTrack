@@ -130,9 +130,10 @@ function obterMesAtual() {
 }
 
 function atualizarMeta() {
-    const mesAtual = obterMesAtual();
+    const mesSelecionado = filtroMes.value || obterMesAtual();
+
     const economiaDoMes = transacoes
-        .filter(transacao => transacao.data.slice(0, 7) === mesAtual)
+        .filter(transacao => transacao.data.slice(0, 7) === mesSelecionado)
         .reduce((total, transacao) => (
             transacao.tipo === "Receita"
                 ? total + Number(transacao.valor)
@@ -153,7 +154,18 @@ function atualizarMeta() {
 
     preenchimentoMeta.style.width = `${percentualVisual}%`;
     barraMeta.setAttribute("aria-valuenow", String(Math.round(percentualVisual)));
-    metaProgresso.textContent = `Economizado no mês: ${formatarMoeda(economiaDoMes)} (${percentualReal.toFixed(0)}%)`;
+    const valorFaltante = metaMensal - economiaDoMes;
+
+    if (economiaDoMes < 0) {
+        metaProgresso.textContent =
+            "Neste mês, as despesas estão maiores que as receitas.";
+    } else if (economiaDoMes >= metaMensal) {
+        metaProgresso.textContent =
+            `Meta atingida! Você ultrapassou em ${formatarMoeda(Math.abs(valorFaltante))}.`;
+    } else {
+        metaProgresso.textContent =
+            `Faltam ${formatarMoeda(valorFaltante)} para atingir sua meta (${percentualReal.toFixed(0)}%).`;
+    }
 }
 
 
@@ -241,6 +253,7 @@ limparMes.addEventListener("click", () => {
     filtroMes.value = "";
 
     aplicarFiltro();
+    atualizarMeta();
 });
 async function removerTransacao(index) {
 
@@ -441,7 +454,10 @@ modal.querySelectorAll("input, select").forEach(campo => {
 
 pesquisa.addEventListener("input", aplicarFiltro);
 filtroTipo.addEventListener("change", aplicarFiltro);
-filtroMes.addEventListener("change", aplicarFiltro);
+filtroMes.addEventListener("change", () => {
+    aplicarFiltro();
+    atualizarMeta();
+});
 
 // Gráficos
 
