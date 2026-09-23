@@ -3,6 +3,8 @@ const receitasTela = document.querySelector("#receitas");
 const despesasTela = document.querySelector("#despesas");
 const metaTela = document.querySelector("#meta");
 const metaProgresso = document.querySelector("#meta-progresso");
+const barraMeta = document.querySelector("#barra-meta");
+const preenchimentoMeta = document.querySelector("#preenchimento-meta");
 const categoria = document.querySelector("#categoria").value;
 const data = document.querySelector("#data").value;
 
@@ -141,11 +143,17 @@ function atualizarMeta() {
 
     if (metaMensal === 0) {
         metaProgresso.textContent = "Defina sua meta em Configurações.";
+        preenchimentoMeta.style.width = "0%";
+        barraMeta.setAttribute("aria-valuenow", "0");
         return;
     }
 
-    const percentual = Math.max(0, Math.min((economiaDoMes / metaMensal) * 100, 100));
-    metaProgresso.textContent = `Economizado no mês: ${formatarMoeda(economiaDoMes)} (${percentual.toFixed(0)}%)`;
+    const percentualReal = (economiaDoMes / metaMensal) * 100;
+    const percentualVisual = Math.max(0, Math.min(percentualReal, 100));
+
+    preenchimentoMeta.style.width = `${percentualVisual}%`;
+    barraMeta.setAttribute("aria-valuenow", String(Math.round(percentualVisual)));
+    metaProgresso.textContent = `Economizado no mês: ${formatarMoeda(economiaDoMes)} (${percentualReal.toFixed(0)}%)`;
 }
 
 
