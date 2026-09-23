@@ -121,6 +121,21 @@ function formatarMoeda(valor) {
     });
 }
 
+function formatarData(data) {
+    if (!data || typeof data !== "string") {
+        return "";
+    }
+
+    const dataSemHorario = data.slice(0, 10);
+    const [ano, mes, dia] = dataSemHorario.split("-");
+
+    if (!ano || !mes || !dia) {
+        return data;
+    }
+
+    return `${dia}/${mes}/${ano}`;
+}
+
 function obterMesAtual() {
     const agora = new Date();
     const ano = agora.getFullYear();
@@ -215,7 +230,7 @@ function mostrarTransacoes(listaTransacoes = transacoes) {
 
                     <p>${transacao.tipo}</p>
                         <p>${transacao.categoria}</p>
-                        <p>${transacao.data}</p>
+                        <p>${formatarData(transacao.data)}</p>
 
                 </div>
 
