@@ -12,26 +12,27 @@ Com isso, o usuário pode acompanhar sua vida financeira sem depender de fórmul
 
 ## Funcionalidades
 
-#Landing Page + Modo Claro.
+# Landing Page + Modo Claro.
 
 <img width="692" height="388" alt="LandingPage" src="https://github.com/user-attachments/assets/5d0fb527-982c-4b57-b887-25e071f5cd70" />
 
-#Funcionalidade de cadastro e funcionalidade do sistema de meta.
+# Funcionalidade de cadastro e sistema de meta.
 
 <img width="692" height="388" alt="Demonstração cadastro e meta" src="https://github.com/user-attachments/assets/c6c82b30-1a2a-4a1c-8c59-811244f50e72" />
 
-#Edição e exclusão.
+# Edição e exclusão.
 
-#Opção para exportar para PDF.
+<img width="692" height="388" alt="Edição e exclusão" src="https://github.com/user-attachments/assets/41a19f4e-b5f1-4c22-8c27-1e1938a0c467" />
+
+# Opção para exportar para PDF.
 
 <img width="692" height="388" alt="Exportar PDF" src="https://github.com/user-attachments/assets/18a98925-471e-4b9f-8d6f-8dbffe21982a" />
 
-#Demonstração do arquivo PDF gerado.
+# Demonstração do arquivo PDF gerado.
 
 <img width="1920" height="1080" alt="Capturar" src="https://github.com/user-attachments/assets/1d02b233-450b-433a-aa05-c55a1fde958b" />
 
-
-#Responsividade.
+# Responsividade.
 
 <img width="692" height="388" alt="Responsividade" src="https://github.com/user-attachments/assets/ec115830-1681-4253-8e60-791339a8906c" />
 
