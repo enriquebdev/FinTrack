@@ -286,6 +286,10 @@
     order: 6;
 }
 
+.configuracoes {
+    order: 7;
+}
+
 @media (min-width: 1101px) {
     .transacoes {
         grid-column: span 8;
@@ -454,6 +458,15 @@
         width: 100%;
     }
 
+    .form-configuracoes {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .form-configuracoes .btn-add {
+        width: 100%;
+    }
+
     .relatorio-resumo {
         grid-template-columns: 1fr;
         gap: 12px;
@@ -504,8 +517,7 @@
     }
 
     .logo,
-    .bottom,
-    .menu a:nth-child(5) {
+    .bottom {
         display: none;
     }
 

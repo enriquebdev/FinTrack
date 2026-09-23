@@ -1,6 +1,8 @@
 const saldoTela = document.querySelector("#saldo");
 const receitasTela = document.querySelector("#receitas");
 const despesasTela = document.querySelector("#despesas");
+const metaTela = document.querySelector("#meta");
+const metaProgresso = document.querySelector("#meta-progresso");
 const categoria = document.querySelector("#categoria").value;
 const data = document.querySelector("#data").value;
 
@@ -24,6 +26,7 @@ const pesquisa = document.querySelector("#pesquisa");
 
 let indiceEdicao = null;
 let temporizadorToast;
+let metaMensal = 0;
 
 
 
@@ -109,6 +112,42 @@ function mostrarSucesso(mensagem) {
     mostrarNotificacao(mensagem);
 }
 
+function formatarMoeda(valor) {
+    return Number(valor).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
+
+function obterMesAtual() {
+    const agora = new Date();
+    const ano = agora.getFullYear();
+    const mes = String(agora.getMonth() + 1).padStart(2, "0");
+
+    return `${ano}-${mes}`;
+}
+
+function atualizarMeta() {
+    const mesAtual = obterMesAtual();
+    const economiaDoMes = transacoes
+        .filter(transacao => transacao.data.slice(0, 7) === mesAtual)
+        .reduce((total, transacao) => (
+            transacao.tipo === "Receita"
+                ? total + Number(transacao.valor)
+                : total - Number(transacao.valor)
+        ), 0);
+
+    metaTela.textContent = formatarMoeda(metaMensal);
+
+    if (metaMensal === 0) {
+        metaProgresso.textContent = "Defina sua meta em Configurações.";
+        return;
+    }
+
+    const percentual = Math.max(0, Math.min((economiaDoMes / metaMensal) * 100, 100));
+    metaProgresso.textContent = `Economizado no mês: ${formatarMoeda(economiaDoMes)} (${percentual.toFixed(0)}%)`;
+}
+
 
 function atualizarCards() {
 
@@ -135,6 +174,7 @@ function atualizarCards() {
     saldoTela.textContent = `R$ ${saldo.toFixed(2)}`;
     receitasTela.textContent = `R$ ${receitas.toFixed(2)}`;
     despesasTela.textContent = `R$ ${despesas.toFixed(2)}`;
+    atualizarMeta();
 
 }
 
@@ -951,6 +991,23 @@ async function carregarTransacoesDaApi() {
     }
 }
 
+async function carregarConfiguracoesDaApi() {
+    try {
+        const resposta = await fetch("http://localhost:3000/configuracoes");
+
+        if (!resposta.ok) {
+            throw new Error(`Erro HTTP: ${resposta.status}`);
+        }
+
+        const configuracoes = await resposta.json();
+        metaMensal = Number(configuracoes.metaMensal);
+        atualizarMeta();
+    } catch (erro) {
+        console.error("Erro ao carregar configurações:", erro);
+        mostrarNotificacao("Não foi possível carregar a meta mensal.", "erro");
+    }
+}
+
 // Função para enviar uma nova transação para a API
 
 async function enviarTransacao(transacao) {
@@ -1047,4 +1104,5 @@ menuRelatorios.addEventListener("click", () => {
 });
 filtroRelatorioMes.addEventListener("change", atualizarRelatorios);
 botaoExportarRelatorio.addEventListener("click", exportarRelatorioPdf);
+carregarConfiguracoesDaApi();
 carregarTransacoesDaApi();

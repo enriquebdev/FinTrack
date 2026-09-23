@@ -1,0 +1,14 @@
+.pagina-configuracoes {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.configuracoes-pagina {
+    width: 100%;
+}
+
+@media (max-width: 760px) {
+    .pagina-configuracoes {
+        width: 100%;
+    }
+}

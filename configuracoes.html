@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações | FinTrack</title>
+
+    <link rel="stylesheet" href="CSS/modal.css">
+    <link rel="stylesheet" href="CSS/pesquisa.css">
+    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="CSS/animacoes.css">
+    <link rel="stylesheet" href="CSS/configuracoes.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <h1>FinTrack</h1>
+        </div>
+
+        <nav class="menu">
+            <a href="index.html" id="menu-dashboard">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="index.html#transacoes" id="menu-transacoes">
+                <i data-lucide="wallet"></i>
+                <span>Transações</span>
+            </a>
+            <a href="index.html#categorias" id="menu-categorias">
+                <i data-lucide="tag"></i>
+                <span>Categorias</span>
+            </a>
+            <a href="index.html#relatorios" id="menu-relatorios">
+                <i data-lucide="pie-chart"></i>
+                <span>Relatórios</span>
+            </a>
+            <a href="configuracoes.html" class="active" id="menu-configuracoes">
+                <i data-lucide="settings"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+
+        <div class="bottom">
+            <a href="#">
+                <i data-lucide="log-out"></i>
+                <span>Sair</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="content">
+        <header>
+            <h2>Configurações</h2>
+
+            <div class="header-right">
+                <button id="alternar-tema" class="btn-tema" aria-label="Alternar tema">
+                    <i data-lucide="moon"></i>
+                </button>
+                <div class="avatar">EB</div>
+            </div>
+        </header>
+
+        <main class="pagina-configuracoes">
+            <section class="card configuracoes configuracoes-pagina">
+                <div class="card-header">
+                    <div>
+                        <h3>Meta de economia</h3>
+                        <p>Defina quanto você deseja economizar por mês.</p>
+                    </div>
+                </div>
+
+                <form id="form-configuracoes" class="form-configuracoes">
+                    <label for="meta-mensal">
+                        Meta mensal (R$)
+                        <input type="number" id="meta-mensal" min="0" step="0.01" placeholder="Ex.: 500,00" required>
+                    </label>
+
+                    <button type="submit" class="btn-add">Salvar meta</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast-sucesso" class="toast-sucesso" role="status" aria-live="polite"></div>
+
+    <script src="JS/configuracoes.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

@@ -403,6 +403,58 @@ body.modo-claro .relatorio-filtro input {
     min-height: 300px;
 }
 
+.configuracoes {
+    grid-column: span 12;
+    scroll-margin-top: 110px;
+}
+
+#configuracoes:target {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(22, 199, 132, 0.15);
+}
+
+.configuracoes .card-header p {
+    margin-top: 6px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.form-configuracoes {
+    display: flex;
+    align-items: end;
+    gap: 14px;
+}
+
+.form-configuracoes label {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.form-configuracoes input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    background: var(--background);
+    color: var(--text);
+    font: inherit;
+}
+
+.form-configuracoes input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(22, 199, 132, 0.15);
+}
+
+.meta-progresso {
+    min-height: 34px;
+}
+
 @media (max-width: 700px) {
     .relatorio-resumo {
         grid-template-columns: 1fr;

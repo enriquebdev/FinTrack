@@ -19,7 +19,8 @@ Com isso, o usuário pode acompanhar sua vida financeira sem depender de fórmul
 - Relatórios por período com resumo, comparação mensal e evolução diária.
 - Exportação de relatórios em PDF conforme o período selecionado.
 - Resumo de categorias com quantidade de lançamentos e valor total movimentado.
-- Navegação na sidebar para Dashboard, Transações, Categorias e Relatórios.
+- Meta mensal de economia configurável, com acompanhamento do valor economizado no mês.
+- Navegação na sidebar para Dashboard, Transações, Categorias, Relatórios e Configurações.
 - Feedback visual de erro no modal e notificações de sucesso no rodapé.
 - Persistência no PostgreSQL: os dados permanecem após reiniciar a API.
 
@@ -34,13 +35,16 @@ Com isso, o usuário pode acompanhar sua vida financeira sem depender de fórmul
 
 ```text
 FinTrack/
-├── CSS/                 # Estilos da interface
-├── JS/script.js         # Lógica do dashboard e consumo da API
+├── CSS/                 # Estilos da interface, incluindo a página de Configurações
+├── JS/
+│   ├── script.js         # Lógica do dashboard e consumo da API
+│   └── configuracoes.js  # Lógica da página de Configurações
 ├── backend/
 │   ├── server.js        # API Express e integração com PostgreSQL
 │   ├── .env.example     # Modelo das variáveis locais
 │   └── package.json     # Dependências do backend
-└── index.html           # Interface principal
+├── index.html           # Dashboard principal
+└── configuracoes.html   # Página para definir a meta mensal
 ```
 
 ## Pré-requisitos
@@ -93,6 +97,8 @@ A interface é acessada em `http://localhost:5500` e a API em `http://localhost:
 | `POST` | `/transacoes` | Cria uma transação. |
 | `PUT` | `/transacoes/:id` | Atualiza uma transação. |
 | `DELETE` | `/transacoes/:id` | Exclui uma transação. |
+| `GET` | `/configuracoes` | Consulta a meta mensal configurada. |
+| `PUT` | `/configuracoes` | Atualiza a meta mensal de economia. |
 
 ## Próximos passos
 

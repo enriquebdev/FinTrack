@@ -5,7 +5,7 @@ const cors = require("cors");
 const { Pool } = require("pg");
 
 const app = express();
-const portaApi = 3000;
+const portaApi = Number(process.env.PORT) || 3000;
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -88,10 +88,57 @@ async function inicializarBanco() {
         ADD CONSTRAINT transacoes_tipo_check
         CHECK (tipo IN ('Receita', 'Despesa'))
     `);
+
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS configuracoes (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            meta_mensal NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (meta_mensal >= 0),
+            atualizado_em TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `);
+
+    await pool.query(`
+        INSERT INTO configuracoes (id, meta_mensal)
+        VALUES (1, 0)
+        ON CONFLICT (id) DO NOTHING
+    `);
 }
 
 app.get("/", (req, res) => {
     res.send("Bem-vindo à API do FinTrack!");
+});
+
+app.get("/configuracoes", async (req, res, next) => {
+    try {
+        const resultado = await pool.query(`
+            SELECT meta_mensal::float8 AS "metaMensal"
+            FROM configuracoes
+            WHERE id = 1
+        `);
+        res.json(resultado.rows[0]);
+    } catch (erro) {
+        next(erro);
+    }
+});
+
+app.put("/configuracoes", async (req, res, next) => {
+    const metaMensal = Number(req.body?.metaMensal);
+
+    if (!Number.isFinite(metaMensal) || metaMensal < 0) {
+        return res.status(400).json({ mensagem: "A meta mensal deve ser um número igual ou maior que zero" });
+    }
+
+    try {
+        const resultado = await pool.query(`
+            UPDATE configuracoes
+            SET meta_mensal = $1, atualizado_em = NOW()
+            WHERE id = 1
+            RETURNING meta_mensal::float8 AS "metaMensal"
+        `, [metaMensal]);
+        res.json(resultado.rows[0]);
+    } catch (erro) {
+        next(erro);
+    }
 });
 
 app.get("/transacoes", async (req, res, next) => {
