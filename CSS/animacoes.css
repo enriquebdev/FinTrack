@@ -564,3 +564,44 @@
         justify-content: center;
     }
 }
+
+/* Notificação exibida após ações concluídas, como cadastrar ou excluir. */
+.toast-sucesso {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 1100;
+
+    max-width: calc(100% - 32px);
+    padding: 12px 18px;
+
+    border-radius: 12px;
+    background: var(--primary);
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 24px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast-sucesso.ativo {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.toast-sucesso.erro {
+    background: var(--danger);
+}
+
+@media (max-width: 480px) {
+    .toast-sucesso {
+        bottom: 88px;
+    }
+}
