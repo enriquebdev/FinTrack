@@ -12,17 +12,28 @@ Com isso, o usuário pode acompanhar sua vida financeira sem depender de fórmul
 
 ## Funcionalidades
 
-- Cadastro, edição e exclusão de transações.
-- Pesquisa por descrição e filtros por tipo e mês.
-- Cálculo automático de saldo, receitas e despesas.
-- Gráficos de fluxo financeiro, distribuição financeira e comparação entre receitas e despesas.
-- Relatórios por período com resumo, comparação mensal e evolução diária.
-- Exportação de relatórios em PDF conforme o período selecionado.
-- Resumo de categorias com quantidade de lançamentos e valor total movimentado.
-- Meta mensal de economia configurável, com acompanhamento do valor economizado no mês.
-- Navegação na sidebar para Dashboard, Transações, Categorias, Relatórios e Configurações.
-- Feedback visual de erro no modal e notificações de sucesso no rodapé.
-- Persistência no PostgreSQL: os dados permanecem após reiniciar a API.
+#Landing Page + Modo Claro.
+
+<img width="692" height="388" alt="LandingPage" src="https://github.com/user-attachments/assets/5d0fb527-982c-4b57-b887-25e071f5cd70" />
+
+#Funcionalidade de cadastro e funcionalidade do sistema de meta.
+
+<img width="692" height="388" alt="Demonstração cadastro e meta" src="https://github.com/user-attachments/assets/c6c82b30-1a2a-4a1c-8c59-811244f50e72" />
+
+#Edição e exclusão.
+
+#Opção para exportar para PDF.
+
+<img width="692" height="388" alt="Exportar PDF" src="https://github.com/user-attachments/assets/18a98925-471e-4b9f-8d6f-8dbffe21982a" />
+
+#Demonstração do arquivo PDF gerado.
+
+<img width="1920" height="1080" alt="Capturar" src="https://github.com/user-attachments/assets/1d02b233-450b-433a-aa05-c55a1fde958b" />
+
+
+#Responsividade.
+
+<img width="692" height="388" alt="Responsividade" src="https://github.com/user-attachments/assets/ec115830-1681-4253-8e60-791339a8906c" />
 
 ## Tecnologias
 
@@ -31,74 +42,6 @@ Com isso, o usuário pode acompanhar sua vida financeira sem depender de fórmul
 - Node.js, Express e CORS no backend.
 - PostgreSQL e `pg` para persistência de dados.
 
-## Estrutura do projeto
-
-```text
-FinTrack/
-├── CSS/                 # Estilos da interface, incluindo a página de Configurações
-├── JS/
-│   ├── script.js         # Lógica do dashboard e consumo da API
-│   └── configuracoes.js  # Lógica da página de Configurações
-├── backend/
-│   ├── server.js        # API Express e integração com PostgreSQL
-│   ├── .env.example     # Modelo das variáveis locais
-│   └── package.json     # Dependências do backend
-├── index.html           # Dashboard principal
-└── configuracoes.html   # Página para definir a meta mensal
-```
-
-## Pré-requisitos
-
-- Node.js instalado.
-- PostgreSQL instalado e em execução.
-- Banco de dados `Fintrack` criado.
-- Um servidor local para o front-end, como Live Server no VS Code.
-
-## Configuração
-
-Na pasta `backend`, crie um arquivo `.env` baseado em `.env.example`:
-
-```env
-DB_USER=postgres
-DB_HOST=localhost
-DB_NAME=Fintrack
-DB_PASSWORD=sua_senha
-DB_PORT=5432
-```
-
-O `.env` contém credenciais e não deve ser versionado.
-
-Instale as dependências do backend:
-
-```bash
-cd backend
-npm install
-```
-
-## Como executar
-
-1. Inicie a API:
-
-   ```bash
-   cd backend
-   node server.js
-   ```
-
-2. Abra `index.html` em um servidor local na porta `5500`.
-
-A interface é acessada em `http://localhost:5500` e a API em `http://localhost:3000`.
-
-## Rotas da API
-
-| Método | Rota | Descrição |
-| --- | --- | --- |
-| `GET` | `/transacoes` | Lista todas as transações. |
-| `GET` | `/transacoes/:id` | Consulta uma transação pelo ID. |
-| `POST` | `/transacoes` | Cria uma transação. |
-| `PUT` | `/transacoes/:id` | Atualiza uma transação. |
-| `DELETE` | `/transacoes/:id` | Exclui uma transação. |
-| `GET` | `/configuracoes` | Consulta a meta mensal configurada. |
-| `PUT` | `/configuracoes` | Atualiza a meta mensal de economia. |
 
 ## Próximos passos
 
